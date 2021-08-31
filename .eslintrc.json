@@ -18,6 +18,10 @@
 		"plugin:prettier/recommended"
 	],
 	"rules": {
+		"@typescript-eslint/no-unused-expressions": "warn",
+		"@typescript-eslint/no-unused-vars": "off",
+		"@typescript-eslint/explicit-function-return-type": "warn",
+		"prefer-const": "off",
 		"prettier/prettier": [
 			"warn",
 			{
@@ -25,6 +29,7 @@
 				"trailingComma": "all",
 				"singleQuote": false,
 				"printWidth": 120,
+				"arrowParens": "avoid",
 				"tabWidth": 4,
 				"useTabs": true
 			}
