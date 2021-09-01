@@ -33,5 +33,9 @@ jobs:
             - name: Install NPM dependencies
               uses: bahmutov/npm-install@v1.7.4
 
+            # I used the dev version of roblox-ts, don't judge me :D
+            - name: Install roblox-ts
+              run: npm i -g roblox-ts@next
+
             - name: Compile and run tests
               run: npm run test
