@@ -15,7 +15,8 @@
 		"target": "ESNext",
 		"typeRoots": [
 			"node_modules/@rbxts",
-			"node_modules/@flamework"
+			"node_modules/@flamework",
+			"node_modules/@memolemo-studios"
 		],
 
 		// configurable
@@ -30,7 +31,9 @@
 
 		// transformers
 		"plugins": [
-			{ "transform": "rbxts-transformer-flamework" }
+			{ "transform": "rbxts-transformer-flamework" },
+			{ "transform": "rbxts-transformer-fs" },
+			{ "transform": "rbxts-transformer-t" }
 		]
 	}
 }
