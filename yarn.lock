@@ -63,12 +63,12 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
-"@memolemo-studios/rbxts-attributes@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@memolemo-studios/rbxts-attributes/-/rbxts-attributes-1.1.0.tgz#e8d502103a020caf62c8a3d7b53d7f1defc5f763"
-  integrity sha512-pjD5Coc6M9pPfi8ai4Dbx1GuWh5co+/ZqfChmtNyiQQWFuJFdXOnVnXgRd5zmsPI5K2SAJjch0y3HC3JI7e0Tw==
+"@memolemo-studios/rbxts-attributes@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@memolemo-studios/rbxts-attributes/-/rbxts-attributes-1.1.1.tgz#b787799a7a8194bb62ff44f7a3e75b8d4574e7c1"
+  integrity sha512-eHk3ZwPZFISRdtVDwNIq0Uw7n6eLsP1S9zX4UxxHrQXVSZdtAeOZOop9i4GuAOv6Ir2UGaE5TfsBWmaEKPf7XA==
   dependencies:
-    "@rbxts/janitor" "^1.1.3"
+    "@rbxts/janitor" "^1.13.6-ts.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -120,11 +120,6 @@
   version "1.2.3-types.0"
   resolved "https://registry.yarnpkg.com/@rbxts/compiler-types/-/compiler-types-1.2.3-types.0.tgz#f6354b379c4c74fd52343675c662e65518e6eb95"
   integrity sha512-8dpU2CJjlinesUdWHdzhtt4oif9VkWgZzPQ61BIN+244CO7EfRBZ4tCEdNrmFjKiba2LZWOsDaMKn6Ui40tpTQ==
-
-"@rbxts/janitor@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@rbxts/janitor/-/janitor-1.1.3.tgz#764c6ea10f41d7f69cc0eda6912c20b366c892a4"
-  integrity sha512-GxJEzCNkfD7yJzQcZVuqB51br4llC8AmfIi1g/fh5w8wmo+zkiQVh4uo9mW0Qf+eD81tXdBsRm8gD0UYOw3PfQ==
 
 "@rbxts/janitor@^1.13.6-ts.0":
   version "1.13.6-ts.0"

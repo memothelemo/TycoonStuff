@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@flamework/core": "^1.0.0-beta.0",
-    "@memolemo-studios/rbxts-attributes": "^1.1.0",
+    "@memolemo-studios/rbxts-attributes": "^1.1.1",
     "@rbxts/attributes-validate": "^1.3.0",
     "@rbxts/binder": "^1.0.4",
     "@rbxts/janitor": "^1.13.6-ts.0",
