@@ -2,9 +2,10 @@
   "name": "tycoonstuff",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "rbxtsc",
+    "lint": "npx eslint src --max-warnings 0",
     "watch": "rbxtsc -w",
     "serve": "rojo serve"
   },
