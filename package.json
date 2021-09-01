@@ -5,9 +5,12 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "rbxtsc",
+    "build-game": "npm run build && rojo build -o ./game.rbxlx",
     "lint": "npx eslint src --max-warnings 0",
     "watch": "rbxtsc -w",
-    "serve": "rojo serve"
+    "serve": "rojo serve",
+	"test": "npm run build-game && npm run test-run",
+    "test-run": "run-in-roblox --place ./game.rbxlx --script ./out/Server/testBootstrap.server.lua"
   },
   "devDependencies": {
     "@rbxts/compiler-types": "^1.2.3-types.0",
@@ -33,6 +36,7 @@
     "@rbxts/services": "^1.2.0",
     "@rbxts/signal": "^1.0.3",
     "@rbxts/t": "^2.1.5",
+    "@rbxts/testez": "^0.3.1-ts.6",
     "@rbxts/validate-tree": "^1.1.1",
     "rbxts-transformer-flamework": "^1.0.0-beta.3",
     "rbxts-transformer-fs": "1.0.5",
