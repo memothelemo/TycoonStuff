@@ -4,7 +4,7 @@ import type { TycoonServerBaseComponent } from "../../../../typings/tycoon";
 
 declare global {
 	interface ServerTycoonComponents {
-		Cube: typeof Cube;
+		Cube: Cube;
 	}
 }
 

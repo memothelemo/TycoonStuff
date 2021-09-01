@@ -6,7 +6,7 @@ import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 
 declare global {
 	interface ServerTycoonComponents {
-		Unlockable: typeof Unlockable;
+		Unlockable: Unlockable;
 	}
 }
 
