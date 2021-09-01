@@ -1,6 +1,7 @@
 import { OnInit, Service } from "@flamework/core";
 import Binder from "@rbxts/binder";
 import Option, { IOption } from "@rbxts/option";
+import Remotes from "Shared/Remotes";
 import { getRandomArrayMember } from "Shared/Util/getRandomArrayMember";
 import { Tycoon } from "./Tycoon";
 
@@ -11,6 +12,15 @@ export class TycoonService implements OnInit {
 	public onInit(): void {
 		this._tycoons = new Binder("Tycoon", Tycoon);
 		this._tycoons.Start();
+
+		// responding player remotes
+		const requestTycoonFunction = Remotes.Server.Create("RequestTycoon");
+		requestTycoonFunction.SetCallback(player => {
+			return this.assignVacantTycoon(player)
+				.then(() => print(`${player.Name} owned a tycoon now!`))
+				.catch(e => warn(e))
+				.await()[0];
+		});
 	}
 
 	public assignVacantTycoon(player: Player): Promise<Tycoon> {
