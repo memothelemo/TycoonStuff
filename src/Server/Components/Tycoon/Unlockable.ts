@@ -14,18 +14,18 @@ interface UnlockableModel extends Model {
 	Button: Part;
 }
 
+const validateUnlockableModel = (instance: Model): boolean =>
+	validateTree(instance, {
+		$className: "Model",
+		Button: "Part",
+	});
+
 /** @hidden */
 class Unlockable implements TycoonServerBaseComponent {
 	private _janitor = new Janitor();
 
 	public constructor(public instance: Model, public tycoon: Tycoon) {
-		assert(
-			validateTree(instance, {
-				$className: "Model",
-				Button: "Model",
-			}),
-			"Be sure to have a button on it!",
-		);
+		assert(validateUnlockableModel(instance), "Be sure to have a button on it!");
 	}
 
 	private onButtonTouched(hit: Instance): void {
