@@ -28,6 +28,9 @@
 			},
 			"Game": {
 				"$path": "out/Shared"
+			},
+			"LuauLib": {
+				"$path": "rbxlua"
 			}
 		},
 		"StarterPlayer": {
