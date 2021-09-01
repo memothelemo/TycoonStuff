@@ -57,7 +57,7 @@ export class Tycoon implements BinderClass {
 
 	// Owner stuff
 	public assignOwner(player: Player): Promise<void> {
-		if (!this._attributes.has("Owner")) {
+		if (this._attributes.has("Owner")) {
 			return Promise.reject("Yes") as Promise<void>;
 		}
 		return new Promise((resolve, reject) => {

@@ -16,10 +16,12 @@ export class TycoonService implements OnInit {
 		// responding player remotes
 		const requestTycoonFunction = Remotes.Server.Create("RequestTycoon");
 		requestTycoonFunction.SetCallback(player => {
-			return this.assignVacantTycoon(player)
-				.then(() => print(`${player.Name} owned a tycoon now!`))
-				.catch(e => warn(e))
-				.await()[0];
+			return (
+				this.assignVacantTycoon(player)
+					.then(() => print(`${player.Name} owned a tycoon now!`))
+					.catch(e => warn(e))
+					.awaitStatus()[0] === Promise.Status.Resolved
+			);
 		});
 	}
 
