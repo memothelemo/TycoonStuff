@@ -9,6 +9,6 @@ const rng = new Random();
 export function getRandomArrayMember<T extends unknown>(array: T[]): T {
 	assert(array.size() > 0, `Empty members are not allowed!`);
 
-	const randomId = rng.NextInteger(1, array.size());
+	const randomId = rng.NextInteger(0, array.size() - 1);
 	return array[randomId];
 }
