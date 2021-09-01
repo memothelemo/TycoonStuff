@@ -13,6 +13,7 @@
 		"tycoonstuff:out/Server/Components/Tycoon/Button@ServerTycoonButton": "tycoonstuff:out/Server/Components/Tycoon/Button@ServerTycoonButton",
 		"tycoonstuff:out/Server/Components/Tycoon/Objects/Unlockable@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/Objects/Unlockable@Unlockable",
 		"tycoonstuff:out/Server/Components/Tycoon/Unlockable@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/Unlockable@Unlockable",
-		"tycoonstuff:out/Server/Components/Tycoon/Cube@Cube": "tycoonstuff:out/Server/Components/Tycoon/Cube@Cube"
+		"tycoonstuff:out/Server/Components/Tycoon/Cube@Cube": "tycoonstuff:out/Server/Components/Tycoon/Cube@Cube",
+		"tycoonstuff:out/Client/Controllers/TycoonController@TycoonController": "tycoonstuff:out/Client/Controllers/TycoonController@TycoonController"
 	}
 }
