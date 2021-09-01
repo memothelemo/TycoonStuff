@@ -6,12 +6,19 @@ let DataService: DataServiceType;
 
 @Service({})
 export class CashService implements OnStart {
-	public incrementFromPlayer(player: Player, change = 1): Promise<void> {
+	public spendFromPlayer(player: Player, price: number): Promise<void> {
 		return new Promise((resolve, reject) => {
 			DataService.getFromPlayer(player).Match({
 				Some: profile => {
-					profile.Data.cash -= change;
-					resolve();
+					const cash = profile.Data.cash;
+					if (cash === undefined) {
+						return reject(`Unknown cash!`);
+					}
+					if (cash >= price) {
+						profile.Data.cash -= price;
+						return resolve();
+					}
+					reject(`Cannot afford!`);
 				},
 				None: () => reject(`${player.Name}'s cash is not loaded`),
 			});

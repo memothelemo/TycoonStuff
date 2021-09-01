@@ -3,11 +3,17 @@ import { validateTree } from "@rbxts/validate-tree";
 import { getPlayerFromCharacter } from "Shared/Util/getPlayerFromCharacter";
 import { TycoonServerBaseComponent } from "../../../../typings/tycoon";
 import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
+import Attributes from "@memolemo-studios/rbxts-attributes";
+import { validateWithMessage } from "@rbxts/attributes-validate";
 
 declare global {
 	interface ServerTycoonComponents {
 		Unlockable: Unlockable;
 	}
+}
+
+interface UnlockableAttributes {
+	Price: number;
 }
 
 interface UnlockableModel extends Model {
@@ -23,12 +29,27 @@ const validateUnlockableModel = (instance: Model): boolean =>
 /** @hidden */
 class Unlockable implements TycoonServerBaseComponent {
 	private _janitor = new Janitor();
+	private _attributes: Attributes<UnlockableAttributes>;
+
+	private _debounce = true;
 
 	public constructor(public instance: Model, public tycoon: Tycoon) {
+		// validating model tree
 		assert(validateUnlockableModel(instance), "Be sure to have a button on it!");
+
+		this._attributes = new Attributes(this.instance);
+
+		// validating attributes
+		const [validated, reason] = validateWithMessage(instance, {
+			Price: "number",
+		});
+		assert(validated, `From: ${instance.GetFullName()} | ${reason}`);
 	}
 
 	private onButtonTouched(hit: Instance): void {
+		if (!this._debounce) return;
+		this._debounce = false;
+
 		getPlayerFromCharacter(hit.Parent).Match({
 			Some: player => {
 				if (!this.tycoon.getOwner().Contains(player)) return;
@@ -36,6 +57,15 @@ class Unlockable implements TycoonServerBaseComponent {
 			},
 			None: () => {},
 		});
+	}
+
+	public setDebounce(bool: boolean): void {
+		this._debounce = bool;
+	}
+
+	/** It is not practical but it is ok */
+	public getPrice(): number {
+		return this._attributes.get("Price");
 	}
 
 	public init(): void {

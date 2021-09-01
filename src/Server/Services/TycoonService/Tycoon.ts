@@ -9,11 +9,14 @@ import { findFirstDescendant } from "Shared/Util/findFirstDescendant";
 import type Unlockable from "Server/Components/Tycoon/Unlockable";
 import type { TycoonAttributes, TycoonModel, TycoonServerBaseComponent } from "../../../../typings/tycoon";
 import type { TycoonService } from "../TycoonService";
+import type { CashService as CashServiceType } from "../CashService";
 import { validateTree } from "@rbxts/validate-tree";
 
 declare global {
 	interface ServerTycoonComponents {}
 }
+
+let CashService: CashServiceType;
 
 const componentContainer = new Instance("Folder");
 componentContainer.Name = "ComponentContainers";
@@ -49,6 +52,11 @@ export class Tycoon implements BinderClass {
 		this.Instance = instance as TycoonModel;
 		this._attributes = new Attributes(this.Instance);
 		this._attributes.set("ComponentId", `Tycoon${currentComponentId}`);
+
+		// load cash service
+		if (!CashService) {
+			CashService = Dependency<CashServiceType>();
+		}
 
 		task.spawn(() => this.init());
 	}
@@ -103,14 +111,27 @@ export class Tycoon implements BinderClass {
 	}
 
 	public unlock(unlockable: Unlockable): void {
-		const instance = unlockable.instance;
-		CollectionService.RemoveTag(instance, "Unlockable");
+		const owner = this.getOwner();
+		assert(owner.IsSome(), "Owner left the game!");
 
-		this.lockComponent(instance);
-		instance.Parent = this.Instance.Components;
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+		const price = unlockable.getPrice();
 
-		// TODO: animations
-		unlockable.onSpawn();
+		CashService.spendFromPlayer(owner.Unwrap(), price)
+			.then(() => {
+				const instance = unlockable.instance;
+				CollectionService.RemoveTag(instance, "Unlockable");
+
+				this.lockComponent(instance);
+				instance.Parent = this.Instance.Components;
+
+				// TODO: animations
+				unlockable.onSpawn();
+			})
+			.catch(e => {
+				unlockable.setDebounce(true);
+				warn(e);
+			});
 	}
 
 	public lockAll(): void {
