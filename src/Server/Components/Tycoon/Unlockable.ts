@@ -39,9 +39,15 @@ class Unlockable implements TycoonServerBaseComponent {
 	}
 
 	public init(): void {
-		// subscribing buton touched evento
+		const button = (this.instance as UnlockableModel).Button;
+
+		// assigning button to the tycoon instance?
+		button.Parent = this.tycoon.Instance.Components;
+		this._janitor.Add(button);
+
+		// subscribing button touched evento
 		// eslint-disable-next-line prettier/prettier
-		this._janitor.Add((this.instance as UnlockableModel).Button
+		this._janitor.Add(button
 			.Touched
 			.Connect(hit => this.onButtonTouched(hit))
 		);

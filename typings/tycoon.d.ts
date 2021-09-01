@@ -1,7 +1,7 @@
 import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 
 interface TycoonModel extends Model {
-	Objects: Folder;
+	Components: Folder;
 }
 
 interface TycoonAttributes {

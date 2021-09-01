@@ -15,11 +15,6 @@ declare global {
 	interface ServerTycoonComponents {}
 }
 
-interface ComponentStorageFolder extends Folder {
-	Objects: Folder;
-	Button: ModuleScript;
-}
-
 const componentContainer = new Instance("Folder");
 componentContainer.Name = "ComponentContainers";
 componentContainer.Parent = ServerStorage;
@@ -27,12 +22,13 @@ componentContainer.Parent = ServerStorage;
 const tycoonModelCheck = (instance: Instance): instance is TycoonModel =>
 	validateTree(instance, {
 		$className: "Model",
-		Objects: "Folder",
+		Components: "Folder",
 	});
-const moduleStorage = $instance<ComponentStorageFolder>("src/Server/Components/Tycoon");
+
+const moduleStorage = $instance<Folder>("src/Server/Components/Tycoon");
 const componentClassCheck = t.interface({
-	Init: t.callback,
-	Destroy: t.callback,
+	init: t.callback,
+	destroy: t.callback,
 });
 
 let currentComponentId = 0;
@@ -53,6 +49,8 @@ export class Tycoon implements BinderClass {
 		this.Instance = instance as TycoonModel;
 		this._attributes = new Attributes(this.Instance);
 		this._attributes.set("ComponentId", `Tycoon${currentComponentId}`);
+
+		task.spawn(() => this.init());
 	}
 
 	// Owner stuff
@@ -99,7 +97,9 @@ export class Tycoon implements BinderClass {
 
 		// save somewhere in ServerStorage
 		instance.Parent = componentContainer;
-		this._createComponent(instance, "Unlockable");
+
+		const component = this._createComponent(instance, "Unlockable");
+		component.init();
 	}
 
 	public unlock(unlockable: Unlockable): void {
@@ -107,14 +107,14 @@ export class Tycoon implements BinderClass {
 		CollectionService.RemoveTag(instance, "Unlockable");
 
 		this.lockComponent(instance);
-		instance.Parent = this.Instance.Objects;
+		instance.Parent = this.Instance.Components;
 
 		// TODO: animations
 		unlockable.onSpawn();
 	}
 
 	public lockAll(): void {
-		for (const model of this.Instance.GetDescendants()) {
+		for (const model of this.Instance.Components.GetDescendants()) {
 			if (!model.IsA("Model")) continue;
 
 			// require PrimaryPart
@@ -171,8 +171,8 @@ export class Tycoon implements BinderClass {
 
 	// Base initialization
 	public init(): void {
-		print("The tycoon was initialized");
 		this.lockAll();
+		print("The tycoon was initialized");
 	}
 
 	// I know this method name is little bit funky than the rest

@@ -2,18 +2,10 @@
 	"version": 1,
 	"flameworkVersion": "1.0.0-beta.3",
 	"identifiers": {
-		"tycoonstuff:out/Client/Controllers/TestController@TestController": "tycoonstuff:out/Client/Controllers/TestController@TestController",
-		"tycoonstuff:out/Server/Services/TestService@TestService": "tycoonstuff:out/Server/Services/TestService@TestService",
-		"tycoonstuff:out/Server/Services/TycoonService@TycoonService": "tycoonstuff:out/Server/Services/TycoonService@TycoonService",
-		"tycoonstuff:out/Server/Components/Tycoon@Tycoon": "tycoonstuff:out/Server/Components/Tycoon@Tycoon",
+		"tycoonstuff:out/Client/Controllers/TycoonController@TycoonController": "tycoonstuff:out/Client/Controllers/TycoonController@TycoonController",
+		"tycoonstuff:out/Server/Components/Tycoon/Unlockable@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/Unlockable@Unlockable",
 		"tycoonstuff:out/Server/Services/TycoonService/init@TycoonService": "tycoonstuff:out/Server/Services/TycoonService/init@TycoonService",
 		"tycoonstuff:out/Server/Services/TycoonService/Tycoon@Tycoon": "tycoonstuff:out/Server/Services/TycoonService/Tycoon@Tycoon",
-		"tycoonstuff:out/Server/Components/Tycoon/Button@Button": "tycoonstuff:out/Server/Components/Tycoon/Button@Button",
-		"tycoonstuff:out/Server/Components/Tycoon/Objects/Cube@Cube": "tycoonstuff:out/Server/Components/Tycoon/Objects/Cube@Cube",
-		"tycoonstuff:out/Server/Components/Tycoon/Button@ServerTycoonButton": "tycoonstuff:out/Server/Components/Tycoon/Button@ServerTycoonButton",
-		"tycoonstuff:out/Server/Components/Tycoon/Objects/Unlockable@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/Objects/Unlockable@Unlockable",
-		"tycoonstuff:out/Server/Components/Tycoon/Unlockable@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/Unlockable@Unlockable",
-		"tycoonstuff:out/Server/Components/Tycoon/Cube@Cube": "tycoonstuff:out/Server/Components/Tycoon/Cube@Cube",
-		"tycoonstuff:out/Client/Controllers/TycoonController@TycoonController": "tycoonstuff:out/Client/Controllers/TycoonController@TycoonController"
+		"tycoonstuff:out/Server/Components/Tycoon/Cube@Cube": "tycoonstuff:out/Server/Components/Tycoon/Cube@Cube"
 	}
 }
