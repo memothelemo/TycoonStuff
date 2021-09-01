@@ -112,6 +112,15 @@ export class Tycoon implements BinderClass {
 	public lockAll(): void {
 		for (const model of this.Instance.GetDescendants()) {
 			if (!model.IsA("Model")) continue;
+
+			// require PrimaryPart
+			if (!model.PrimaryPart) {
+				warn(
+					`${model.GetFullName()} lacked PrimaryPart, please assign one. This model will be temporarily disabled`,
+				);
+				continue;
+			}
+
 			if (CollectionService.HasTag(model, "Unlockable")) {
 				this.lockComponent(model);
 			} else {
