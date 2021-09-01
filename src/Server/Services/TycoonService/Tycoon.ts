@@ -9,7 +9,7 @@ import { findFirstDescendant } from "Shared/Util/findFirstDescendant";
 import type Unlockable from "Server/Components/Tycoon/Unlockable";
 import type { TycoonAttributes, TycoonModel, TycoonServerBaseComponent } from "../../../../typings/tycoon";
 import type { TycoonService } from "../TycoonService";
-import { $terrify } from "rbxts-transformer-t";
+import { validateTree } from "@rbxts/validate-tree";
 
 declare global {
 	interface ServerTycoonComponents {}
@@ -24,7 +24,11 @@ const componentContainer = new Instance("Folder");
 componentContainer.Name = "ComponentContainers";
 componentContainer.Parent = ServerStorage;
 
-const tycoonModelCheck = $terrify<TycoonModel>();
+const tycoonModelCheck = (instance: Instance): instance is TycoonModel =>
+	validateTree(instance, {
+		$className: "Model",
+		Objects: "Folder",
+	});
 const moduleStorage = $instance<ComponentStorageFolder>("src/Server/Components/Tycoon");
 const componentClassCheck = t.interface({
 	Init: t.callback,
