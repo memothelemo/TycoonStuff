@@ -26,6 +26,7 @@
     "@rbxts/attributes-validate": "^1.3.0",
     "@rbxts/binder": "^1.0.4",
     "@rbxts/janitor": "^1.13.6-ts.0",
+    "@rbxts/net": "^2.1.4",
     "@rbxts/option": "^1.0.1",
     "@rbxts/services": "^1.2.0",
     "@rbxts/t": "^2.1.5",

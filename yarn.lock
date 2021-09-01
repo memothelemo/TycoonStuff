@@ -136,6 +136,11 @@
   resolved "https://registry.yarnpkg.com/@rbxts/maid/-/maid-1.0.0-ts.1.tgz#3db8687be6293cb66e8ba7f53994781e8ef679af"
   integrity sha512-nm4eucrDE5NnpkHJaaZvMwFJjk9YLAXrLYyA/MWXHI8vr7jeGHmex1N2b90ewa9KqeH+RiWlkXmj2xBALonC4Q==
 
+"@rbxts/net@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@rbxts/net/-/net-2.1.4.tgz#1607cdb16d4fc632ed4a06067d56987f1925aa09"
+  integrity sha512-9tgWD3batonF5Yal53+0br8h/god/8xD4QVCX+ir5+yotGq6RkxqpUvfnjs1AEVQBvFQ5fkLlbfPJ/4Ip/B/ww==
+
 "@rbxts/object-utils@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@rbxts/object-utils/-/object-utils-1.0.4.tgz#c53d80f89e75c401365446be63fa1396bc2cffe7"
