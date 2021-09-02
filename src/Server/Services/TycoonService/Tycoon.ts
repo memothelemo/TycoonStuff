@@ -1,21 +1,22 @@
-import type Unlockable from "Server/Components/Tycoon/Unlockable";
-import type { TycoonAttributes, TycoonModel, TycoonServerBaseComponent } from "../../../../typings/tycoon";
-import type { TycoonService } from "../TycoonService";
-import type { CashService as CashServiceType } from "../CashService";
 import { Dependency } from "@flamework/core";
 import Attributes from "@memolemo-studios/rbxts-attributes";
 import { BinderClass } from "@rbxts/binder";
 import Option, { IOption } from "@rbxts/option";
 import { CollectionService, Players, RunService, ServerStorage } from "@rbxts/services";
-import { t } from "@rbxts/t";
-import { $instance } from "rbxts-transformer-fs";
-import { findFirstDescendant } from "Shared/Util/findFirstDescendant";
-import { validateTree } from "@rbxts/validate-tree";
 import Signal from "@rbxts/signal";
-import { ModelHighlighter } from "Shared/Classes/ModelHighlighter";
-import Spring from "../../../../rbxlua/Spring";
-import { lerpNumber } from "Shared/Util/lerpNumber";
+import { t } from "@rbxts/t";
+import { validateTree } from "@rbxts/validate-tree";
+import { $instance } from "rbxts-transformer-fs";
+import type Unlockable from "Server/Components/Tycoon/Unlockable";
 import { TARGET_ANIMATION_TIME } from "Server/Constants/animation";
+import { ModelHighlighter } from "Shared/Classes/ModelHighlighter";
+import { findFirstDescendant } from "Shared/Util/findFirstDescendant";
+import { lerpNumber } from "Shared/Util/lerpNumber";
+
+import Spring from "../../../../rbxlua/Spring";
+import type { TycoonAttributes, TycoonModel, TycoonServerBaseComponent } from "../../../../typings/tycoon";
+import type { CashService as CashServiceType } from "../CashService";
+import type { TycoonService } from "../TycoonService";
 
 declare global {
 	interface ServerTycoonComponents {}

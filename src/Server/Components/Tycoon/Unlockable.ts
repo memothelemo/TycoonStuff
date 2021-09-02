@@ -1,13 +1,14 @@
-import { Janitor } from "@rbxts/janitor";
-import { validateTree } from "@rbxts/validate-tree";
-import { getPlayerFromCharacter } from "Shared/Util/getPlayerFromCharacter";
-import { TycoonServerBaseComponent } from "../../../../typings/tycoon";
-import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 import Attributes from "@memolemo-studios/rbxts-attributes";
+import { Janitor } from "@rbxts/janitor";
 import { RunService, Workspace } from "@rbxts/services";
-import Spring from "../../../../rbxlua/Spring";
+import { validateTree } from "@rbxts/validate-tree";
 import { TARGET_ANIMATION_TIME } from "Server/Constants/animation";
+import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
+import { getPlayerFromCharacter } from "Shared/Util/getPlayerFromCharacter";
 import { lerpNumber } from "Shared/Util/lerpNumber";
+
+import Spring from "../../../../rbxlua/Spring";
+import { TycoonServerBaseComponent } from "../../../../typings/tycoon";
 
 declare global {
 	interface ServerTycoonComponents {

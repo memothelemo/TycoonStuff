@@ -1,5 +1,6 @@
 import { Dependency, OnStart, Service } from "@flamework/core";
 import Option, { IOption } from "@rbxts/option";
+
 import { DataService as DataServiceType } from "./DataService";
 
 let DataService: DataServiceType;

@@ -1,6 +1,7 @@
 import { Janitor } from "@rbxts/janitor";
 import { RunService } from "@rbxts/services";
 import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
+
 import type { TycoonServerBaseComponent } from "../../../../typings/tycoon";
 
 /** @hidden */
