@@ -14,7 +14,8 @@ export class BaseOre {
 	public constructor(public tycoon: Tycoon, public readonly worth: number, spawnCFrame: CFrame) {
 		const owner = this.tycoon.getOwner();
 		if (owner.IsNone()) {
-			throw `Unexpected error, No owner!`;
+			this.instance = undefined as unknown as BaseOrePart;
+			return;
 		}
 
 		const instance = new Instance("Part");

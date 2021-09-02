@@ -58,6 +58,9 @@ class Dropper implements TycoonServerBaseComponent {
 		const spawnCFrame = dropPart.CFrame.ToWorldSpace(new CFrame(0, -(dropPart.Size.Y / 2 - ORE_SIZE.Y), 0));
 		const currentWorth = this._attributes.get("Worth");
 
+		// if the tycoon is terminated, it is not the good time
+		if (this.tycoon.isTerminated()) return;
+
 		// we don't need to stop this because it is spawned from a different thread
 		new BaseOre(this.tycoon, currentWorth, spawnCFrame);
 	}
