@@ -76,7 +76,6 @@ export class TycoonService implements OnInit {
 		return new Promise((resolve, reject) => {
 			// check if there are vacant tycoons avaliable
 			const vacantTycoons = this._tycoons.GetAll().filter(tycoon => tycoon.getOwner().IsNone());
-			print(vacantTycoons);
 			if (vacantTycoons.size() <= 0) {
 				return reject(`There are no vacant tycoons left to assign the player!`);
 			}
