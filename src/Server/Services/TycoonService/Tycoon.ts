@@ -162,7 +162,6 @@ export class Tycoon implements BinderClass {
 				const instance = unlockable.instance;
 				CollectionService.RemoveTag(instance, "Unlockable");
 
-				this.addComponents(instance);
 				instance.Parent = this.Instance.Components;
 
 				// fancy animations
@@ -170,6 +169,7 @@ export class Tycoon implements BinderClass {
 				doObjectAnimation(instance);
 
 				this.objectUnlocked.Fire(instance.Name);
+				this.addComponents(instance);
 				unlockable.onSpawn();
 			})
 			.catch(e => {
