@@ -11,8 +11,6 @@
 			"",
 			"\tpublic init(): void {}",
 			"",
-			"\tpublic onSpawn(): void {}",
-			"",
 			"\tpublic destroy(): void {}",
 			"}",
 			"",
