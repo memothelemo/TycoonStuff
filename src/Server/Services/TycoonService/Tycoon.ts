@@ -114,8 +114,6 @@ export class Tycoon implements BinderClass {
 		instance.Parent = componentContainer;
 
 		const component = this._createComponent(instance, "Unlockable");
-		component.init();
-
 		this._components.set(instance.Name, component);
 	}
 
