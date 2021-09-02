@@ -183,7 +183,9 @@ class Unlockable implements TycoonServerBaseComponent {
 	}
 
 	public destroy(): void {
-		this._janitor.Destroy();
+		if (this._janitor["Destroy"] !== undefined) {
+			this._janitor.Destroy();
+		}
 	}
 }
 

@@ -32,6 +32,7 @@ const tycoonModelCheck = (instance: Instance): instance is TycoonModel =>
 	validateTree(instance, {
 		$className: "Model",
 		Components: "Folder",
+		Ores: "Folder",
 	});
 
 const moduleStorage = $instance<Folder>("src/Server/Components/Tycoon");
@@ -54,24 +55,37 @@ function doObjectAnimation(model: Model): void {
 	new Promise<void>(resolve => {
 		let timer = 0;
 		let connection: RBXScriptConnection;
+		let isResolved = false;
 
 		connection = RunService.Heartbeat.Connect(dt => {
+			if (isResolved) {
+				task.wait();
+				return highlighter.reset();
+			}
+
 			timer += dt;
 			if (timer >= TARGET_ANIMATION_TIME) {
-				highlighter.reset();
+				isResolved = true;
 				model.SetPrimaryPartCFrame(baseCFrame);
 				connection.Disconnect();
+				highlighter.reset();
 				resolve();
 			}
 
 			const position = spring.GetPosition();
-			highlighter.setTransparency(lerpNumber(1, 0, timer / TARGET_ANIMATION_TIME));
+			highlighter.setTransparencyLerp(lerpNumber(1, 0, timer / TARGET_ANIMATION_TIME));
 			model.SetPrimaryPartCFrame(baseCFrame.ToWorldSpace(new CFrame(0, lerpNumber(RISE_FROM_Y, 0, position), 0)));
 		});
-	}).await();
+	})
+		.then(() => {
+			task.wait();
+			highlighter.reset();
+		})
+		.await();
 }
 
 export class Tycoon implements BinderClass {
+	private _activeComponents = new Array<TycoonServerBaseComponent>();
 	private _components = new Map<string, Unlockable>();
 	private _attributes: Attributes<TycoonAttributes>;
 
@@ -93,8 +107,6 @@ export class Tycoon implements BinderClass {
 		if (!CashService) {
 			CashService = Dependency<CashServiceType>();
 		}
-
-		task.spawn(() => this.init());
 	}
 
 	// Owner stuff
@@ -127,13 +139,21 @@ export class Tycoon implements BinderClass {
 		return this._attributes.has("Owner");
 	}
 
+	public getOwnerId(): IOption<number> {
+		return Option.Wrap(this._attributes.getOr("Owner", -1));
+	}
+
 	public getOwner(): IOption<Player> {
-		const playerFromId = Players.GetPlayerByUserId(this._attributes.getOr("Owner", -1));
+		const playerFromId = Players.GetPlayerByUserId(this._attributes.getOr("Owner", -100));
 		return Option.Wrap(playerFromId!);
 	}
 
 	public getUnlockableComponentFromName(name: string): Unlockable | undefined {
 		return this._components.get(name);
+	}
+
+	public getComponentId(): string {
+		return this._attributes.get("ComponentId");
 	}
 
 	// Component object system
@@ -162,7 +182,6 @@ export class Tycoon implements BinderClass {
 				const instance = unlockable.instance;
 				CollectionService.RemoveTag(instance, "Unlockable");
 
-				this.addComponents(instance);
 				instance.Parent = this.Instance.Components;
 
 				// fancy animations
@@ -170,6 +189,7 @@ export class Tycoon implements BinderClass {
 				doObjectAnimation(instance);
 
 				this.objectUnlocked.Fire(instance.Name);
+				this.addComponents(instance);
 				unlockable.onSpawn();
 			})
 			.catch(e => {
@@ -189,9 +209,6 @@ export class Tycoon implements BinderClass {
 
 			// require PrimaryPart
 			if (!model.PrimaryPart) {
-				warn(
-					`${model.GetFullName()} lacked PrimaryPart, please assign one. This model will be temporarily disabled`,
-				);
 				continue;
 			}
 
@@ -201,6 +218,11 @@ export class Tycoon implements BinderClass {
 				this.addComponents(model);
 			}
 		}
+	}
+
+	public isTerminated(): boolean {
+		// easy pessy
+		return this.Instance.Parent === undefined;
 	}
 
 	private _createComponent<T extends keyof ServerTycoonComponents>(
@@ -229,6 +251,7 @@ export class Tycoon implements BinderClass {
 		const convertedClass = componentClass as unknown as Constructor<TycoonServerBaseComponent>;
 		const component = new convertedClass(instance, this);
 
+		this._activeComponents.push(component);
 		component.init();
 
 		return component;
@@ -250,5 +273,14 @@ export class Tycoon implements BinderClass {
 	// I know this method name is little bit funky than the rest
 	// of the methods because @rbxts/binder requires it
 	// (I will try to find a way to break that rule)
-	public Destroy(): void {}
+	public Destroy(): void {
+		this._activeComponents.forEach(component =>
+			task.spawn((c: TycoonServerBaseComponent) => c.destroy(), component),
+		);
+		this._components.forEach(component => {
+			if (!component.isSpawned()) {
+				component.destroy();
+			}
+		});
+	}
 }
