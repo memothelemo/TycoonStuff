@@ -17,7 +17,7 @@ _For MacOS users, I don't know how to install it. :D_
 1. Go back to the home page and click these provided with the picture below:
 
 <div align="center">
-<img src="assets/repo/download-repo-zip.png" width="500">
+<img src="https://i.imgur.com/BjaeOS7.png" width="500">
 </div>
 
 2. Place the .zip into your desired location and extract the .zip file
@@ -55,7 +55,7 @@ _For MacOS users, I don't know how to install it. :D_
 
 	- Click `Open PowerShell window here` or `Open in Windows Terminal` (both options are fine)
 	<div align="center">
-	<img src="assets/repo/properties-on-windows.png" width="300">
+	<img src="https://i.imgur.com/xQszTdv.png" width="300">
 	</div>
 
 	- Once you're in PowerShell or Windows Terminal, copy below here, paste it to Windows Terminal or PowerShell and press `Enter` key on your keyboard:
@@ -84,7 +84,7 @@ _For MacOS users, I don't know how to install it. :D_
 		It should show like this:
 
 	<div align="center">
-	<img src="assets/repo/roblox-ts-help-line-output.png" width="400">
+	<img src="https://i.imgur.com/u2L54KD.png" width="400">
 	</div>
 
 7. **Linux users only (THIS IS NOT TESTED YET, TRY AT YOUR OWN RISK)**:
