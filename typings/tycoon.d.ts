@@ -2,6 +2,7 @@ import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 
 interface TycoonModel extends Model {
 	Components: Folder;
+	Ores: Folder;
 }
 
 interface TycoonAttributes {
@@ -19,4 +20,9 @@ interface TycoonServerBaseComponent {
 
 	init(): void;
 	destroy(): void;
+}
+
+/** Base ore part structure */
+interface BaseOrePart extends Part {
+	Worth: NumberValue;
 }

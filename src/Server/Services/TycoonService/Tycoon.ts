@@ -32,6 +32,7 @@ const tycoonModelCheck = (instance: Instance): instance is TycoonModel =>
 	validateTree(instance, {
 		$className: "Model",
 		Components: "Folder",
+		Ores: "Folder",
 	});
 
 const moduleStorage = $instance<Folder>("src/Server/Components/Tycoon");
@@ -54,13 +55,20 @@ function doObjectAnimation(model: Model): void {
 	new Promise<void>(resolve => {
 		let timer = 0;
 		let connection: RBXScriptConnection;
+		let isResolved = false;
 
 		connection = RunService.Heartbeat.Connect(dt => {
+			if (isResolved) {
+				task.wait();
+				return highlighter.reset();
+			}
+
 			timer += dt;
 			if (timer >= TARGET_ANIMATION_TIME) {
-				highlighter.reset();
+				isResolved = true;
 				model.SetPrimaryPartCFrame(baseCFrame);
 				connection.Disconnect();
+				highlighter.reset();
 				resolve();
 			}
 
@@ -68,7 +76,12 @@ function doObjectAnimation(model: Model): void {
 			highlighter.setTransparency(lerpNumber(1, 0, timer / TARGET_ANIMATION_TIME));
 			model.SetPrimaryPartCFrame(baseCFrame.ToWorldSpace(new CFrame(0, lerpNumber(RISE_FROM_Y, 0, position), 0)));
 		});
-	}).await();
+	})
+		.then(() => {
+			task.wait();
+			highlighter.reset();
+		})
+		.await();
 }
 
 export class Tycoon implements BinderClass {
@@ -189,9 +202,6 @@ export class Tycoon implements BinderClass {
 
 			// require PrimaryPart
 			if (!model.PrimaryPart) {
-				warn(
-					`${model.GetFullName()} lacked PrimaryPart, please assign one. This model will be temporarily disabled`,
-				);
 				continue;
 			}
 
