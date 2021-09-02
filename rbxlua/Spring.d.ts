@@ -29,25 +29,28 @@ interface Spring<T extends SpringAllowedValues> {
 	GetSpeed(): T;
 
 	/** Sets the position */
-	SetPosition(position: T): void;
+	SetPosition(position: T): Spring<T>;
 
 	/** Sets the velocity */
-	SetVelocity(velocity: T): void;
+	SetVelocity(velocity: T): Spring<T>;
 
 	/** Sets the target */
-	SetTarget(target: T): void;
+	SetTarget(target: T): Spring<T>;
 
 	/**
 	 * Sets the spring damper
 	 * @param damper Defaults to 1, ranges from 0-1
 	 */
-	SetDamper(damper: number): void;
+	SetDamper(damper: number): Spring<T>;
 
 	/**
 	 * Sets the spring speed
 	 * @param speed Defaults to 1, ranges from 0 to infinity
 	 */
-	SetSpeed(speed: number): void;
+	SetSpeed(speed: number): Spring<T>;
+
+	/** Sets the spring clock */
+	SetClock(clock: () => number): Spring<T>;
 }
 
 interface SpringConstructor {
