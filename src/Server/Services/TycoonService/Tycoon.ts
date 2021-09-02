@@ -11,6 +11,7 @@ import type { TycoonAttributes, TycoonModel, TycoonServerBaseComponent } from ".
 import type { TycoonService } from "../TycoonService";
 import type { CashService as CashServiceType } from "../CashService";
 import { validateTree } from "@rbxts/validate-tree";
+import Signal from "@rbxts/signal";
 
 declare global {
 	interface ServerTycoonComponents {}
@@ -38,9 +39,11 @@ let currentComponentId = 0;
 let tycoonService: TycoonService;
 
 export class Tycoon implements BinderClass {
+	private _components = new Map<string, Unlockable>();
 	private _attributes: Attributes<TycoonAttributes>;
 
 	public Instance: TycoonModel;
+	public objectUnlocked = new Signal<(name: string) => void>();
 
 	public constructor(instance: Instance) {
 		// every tycoon must be a model class
@@ -96,6 +99,10 @@ export class Tycoon implements BinderClass {
 		return Option.Wrap(playerFromId!);
 	}
 
+	public getUnlockableComponentFromName(name: string): Unlockable | undefined {
+		return this._components.get(name);
+	}
+
 	// Component object system
 	public lockComponent(instance: Model): void {
 		// we don't want to relock it obviously
@@ -108,6 +115,8 @@ export class Tycoon implements BinderClass {
 
 		const component = this._createComponent(instance, "Unlockable");
 		component.init();
+
+		this._components.set(instance.Name, component);
 	}
 
 	public unlock(unlockable: Unlockable): void {
@@ -122,10 +131,11 @@ export class Tycoon implements BinderClass {
 				const instance = unlockable.instance;
 				CollectionService.RemoveTag(instance, "Unlockable");
 
-				this.lockComponent(instance);
+				this.addComponents(instance);
 				instance.Parent = this.Instance.Components;
 
 				// TODO: animations
+				this.objectUnlocked.Fire(instance.Name);
 				unlockable.onSpawn();
 			})
 			.catch(e => {
@@ -136,6 +146,11 @@ export class Tycoon implements BinderClass {
 
 	public lockAll(): void {
 		for (const model of this.Instance.Components.GetDescendants()) {
+			// same names do not work together
+			if (this._components.has(model.Name)) {
+				error(`Attempting to override existing component: ${model.Name}`);
+			}
+
 			if (!model.IsA("Model")) continue;
 
 			// require PrimaryPart
