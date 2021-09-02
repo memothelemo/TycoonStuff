@@ -17,6 +17,6 @@
 			"export = ${0:$TM_FILENAME_BASE};",
 			""
 		],
-		"description": "memothelemo/SomewhatTycoon's TycoonServerBaseComponent boilerplate"
+		"description": "memothelemo/TycoonStuff's TycoonServerBaseComponent boilerplate"
 	}
 }
