@@ -1,17 +1,21 @@
-import { Dependency } from "@flamework/core";
-import Attributes from "@memolemo-studios/rbxts-attributes";
-import { BinderClass } from "@rbxts/binder";
-import Option, { IOption } from "@rbxts/option";
-import { CollectionService, Players, ServerStorage } from "@rbxts/services";
-import { t } from "@rbxts/t";
-import { $instance } from "rbxts-transformer-fs";
-import { findFirstDescendant } from "Shared/Util/findFirstDescendant";
 import type Unlockable from "Server/Components/Tycoon/Unlockable";
 import type { TycoonAttributes, TycoonModel, TycoonServerBaseComponent } from "../../../../typings/tycoon";
 import type { TycoonService } from "../TycoonService";
 import type { CashService as CashServiceType } from "../CashService";
+import { Dependency } from "@flamework/core";
+import Attributes from "@memolemo-studios/rbxts-attributes";
+import { BinderClass } from "@rbxts/binder";
+import Option, { IOption } from "@rbxts/option";
+import { CollectionService, Players, RunService, ServerStorage } from "@rbxts/services";
+import { t } from "@rbxts/t";
+import { $instance } from "rbxts-transformer-fs";
+import { findFirstDescendant } from "Shared/Util/findFirstDescendant";
 import { validateTree } from "@rbxts/validate-tree";
 import Signal from "@rbxts/signal";
+import { ModelHighlighter } from "Shared/Classes/ModelHighlighter";
+import Spring from "../../../../rbxlua/Spring";
+import { lerpNumber } from "Shared/Util/lerpNumber";
+import { TARGET_ANIMATION_TIME } from "Server/Constants/animation";
 
 declare global {
 	interface ServerTycoonComponents {}
@@ -35,8 +39,36 @@ const componentClassCheck = t.interface({
 	destroy: t.callback,
 });
 
+const RISE_FROM_Y = 5;
+
 let currentComponentId = 0;
 let tycoonService: TycoonService;
+
+function doObjectAnimation(model: Model): void {
+	const highlighter = new ModelHighlighter(model, [model.PrimaryPart!]);
+	const spring = new Spring<number>(0);
+	const baseCFrame = model.PrimaryPart!.CFrame;
+	spring.SetDamper(0.4).SetSpeed(13.4).SetClock(os.clock).SetTarget(1);
+
+	new Promise<void>(resolve => {
+		let timer = 0;
+		let connection: RBXScriptConnection;
+
+		connection = RunService.Heartbeat.Connect(dt => {
+			timer += dt;
+			if (timer >= TARGET_ANIMATION_TIME) {
+				highlighter.reset();
+				model.SetPrimaryPartCFrame(baseCFrame);
+				connection.Disconnect();
+				resolve();
+			}
+
+			const position = spring.GetPosition();
+			highlighter.setTransparency(lerpNumber(1, 0, timer / TARGET_ANIMATION_TIME));
+			model.SetPrimaryPartCFrame(baseCFrame.ToWorldSpace(new CFrame(0, lerpNumber(RISE_FROM_Y, 0, position), 0)));
+		});
+	}).await();
+}
 
 export class Tycoon implements BinderClass {
 	private _components = new Map<string, Unlockable>();
@@ -132,7 +164,10 @@ export class Tycoon implements BinderClass {
 				this.addComponents(instance);
 				instance.Parent = this.Instance.Components;
 
-				// TODO: animations
+				// fancy animations
+				unlockable.setButtonVisibility(false);
+				doObjectAnimation(instance);
+
 				this.objectUnlocked.Fire(instance.Name);
 				unlockable.onSpawn();
 			})

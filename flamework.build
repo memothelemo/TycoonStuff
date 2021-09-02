@@ -8,6 +8,7 @@
 		"tycoonstuff:out/Server/Services/TycoonService/Tycoon@Tycoon": "tycoonstuff:out/Server/Services/TycoonService/Tycoon@Tycoon",
 		"tycoonstuff:out/Server/Components/Tycoon/Cube@Cube": "tycoonstuff:out/Server/Components/Tycoon/Cube@Cube",
 		"tycoonstuff:out/Server/Services/DataService@DataService": "tycoonstuff:out/Server/Services/DataService@DataService",
-		"tycoonstuff:out/Server/Services/CashService@CashService": "tycoonstuff:out/Server/Services/CashService@CashService"
+		"tycoonstuff:out/Server/Services/CashService@CashService": "tycoonstuff:out/Server/Services/CashService@CashService",
+		"tycoonstuff:out/Shared/Classes/ModelHighlighter@ModelHighlighter": "tycoonstuff:out/Shared/Classes/ModelHighlighter@ModelHighlighter"
 	}
 }

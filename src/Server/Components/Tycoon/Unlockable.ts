@@ -4,7 +4,10 @@ import { getPlayerFromCharacter } from "Shared/Util/getPlayerFromCharacter";
 import { TycoonServerBaseComponent } from "../../../../typings/tycoon";
 import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 import Attributes from "@memolemo-studios/rbxts-attributes";
-import { Workspace } from "@rbxts/services";
+import { RunService, Workspace } from "@rbxts/services";
+import Spring from "../../../../rbxlua/Spring";
+import { TARGET_ANIMATION_TIME } from "Server/Constants/animation";
+import { lerpNumber } from "Shared/Util/lerpNumber";
 
 declare global {
 	interface ServerTycoonComponents {
@@ -40,6 +43,7 @@ class Unlockable implements TycoonServerBaseComponent {
 	private _janitor = new Janitor();
 	private _attributes: Attributes<UnlockableAttributes>;
 
+	private _button!: Part;
 	private _debounce = true;
 
 	public constructor(public instance: Model, public tycoon: Tycoon) {
@@ -63,6 +67,38 @@ class Unlockable implements TycoonServerBaseComponent {
 		);
 	}
 
+	public setButtonVisibility(bool: boolean): void {
+		const goal = bool ? 0 : 1;
+		const base = bool ? 1 : 0;
+
+		if (this._button) {
+			if (this._button.Transparency === goal) {
+				return;
+			}
+		}
+
+		const spring = new Spring<number>(base);
+		spring.SetDamper(1).SetSpeed(9).SetTarget(goal);
+
+		let timer = 0;
+		let connection: RBXScriptConnection;
+
+		connection = RunService.Heartbeat.Connect(dt => {
+			timer += dt;
+			if (timer >= TARGET_ANIMATION_TIME || this._button === undefined) {
+				return connection.Disconnect();
+			}
+
+			const position = spring.GetPosition();
+			this._button.Transparency = lerpNumber(base, goal, position);
+		});
+
+		if (this._button !== undefined) {
+			this._button.Transparency = goal;
+			this._button.CanCollide = bool;
+		}
+	}
+
 	private onButtonTouched(hit: Instance): void {
 		if (!this._debounce) return;
 		this._debounce = false;
@@ -77,15 +113,14 @@ class Unlockable implements TycoonServerBaseComponent {
 	}
 
 	private listenButtonTouches(): void {
-		const button = (this.instance as UnlockableModel).Button;
-
 		// assigning button to the tycoon instance?
-		button.Parent = this.tycoon.Instance.Components;
-		this._janitor.Add(button);
+		this.setButtonVisibility(true);
+		this._button.Parent = this.tycoon.Instance.Components;
+		this._janitor.Add(this._button);
 
 		// subscribing button touched evento
 		// eslint-disable-next-line prettier/prettier
-		this._janitor.Add(button
+		this._janitor.Add(this._button
 			.Touched
 			.Connect(hit => this.onButtonTouched(hit))
 		);
@@ -124,6 +159,8 @@ class Unlockable implements TycoonServerBaseComponent {
 	}
 
 	public init(): void {
+		this._button = (this.instance as UnlockableModel).Button;
+
 		// run if it has no dependents
 		if (!this._attributes.has("Dependency")) {
 			return this.listenButtonTouches();
