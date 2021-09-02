@@ -1,4 +1,4 @@
-type SpringAllowedValues = Vector3 | number;
+type SpringAllowedValues = Vector3 | Vector2 | number;
 
 interface Spring<T extends SpringAllowedValues> {
 	/**
@@ -13,38 +13,44 @@ interface Spring<T extends SpringAllowedValues> {
 	 */
 	TimeSkip(delta: T): void;
 
-	/** Alias of `Position` */
-	Value: T;
+	/** Returns the current position */
+	GetPosition(): T;
 
-	/** Sets/returns the current position */
-	Position: T;
+	/** Returns the current velocity */
+	GetVelocity(): T;
 
-	/** Sets/returns the current velocity */
-	Velocity: T;
+	/** Returns the current target */
+	GetTarget(): T;
 
-	/** Sets/returns the target */
-	Target: T;
+	/** Returns the current damper */
+	GetDamper(): T;
 
-	/** Sets/returns the damper (defaults to 1) */
-	Damper: number;
+	/** Returns the current speed */
+	GetSpeed(): T;
 
-	/** Sets/returns the damper (defaults to 1) */
-	Speed: number;
+	/** Sets the position */
+	SetPosition(position: T): Spring<T>;
 
-	/** Shortcut for `Velocity` */
-	v: number;
+	/** Sets the velocity */
+	SetVelocity(velocity: T): Spring<T>;
 
-	/** Shortcut for `Target` */
-	t: number;
+	/** Sets the target */
+	SetTarget(target: T): Spring<T>;
 
-	/** Shortcut for `Damper` */
-	d: number;
+	/**
+	 * Sets the spring damper
+	 * @param damper Defaults to 1, ranges from 0-1
+	 */
+	SetDamper(damper: number): Spring<T>;
 
-	/** Shortcut for `Speed` */
-	s: number;
+	/**
+	 * Sets the spring speed
+	 * @param speed Defaults to 1, ranges from 0 to infinity
+	 */
+	SetSpeed(speed: number): Spring<T>;
 
-	/** Shortcut for `Position` */
-	p: number;
+	/** Sets the spring clock */
+	SetClock(clock: () => number): Spring<T>;
 }
 
 interface SpringConstructor {
@@ -52,8 +58,7 @@ interface SpringConstructor {
 	 * Creates a new spring
 	 * @param initial A number or Vector3 (anything with * number and addition/subtraction defined)
 	 */
-	new (initial: Vector3): Spring<Vector3>;
-	new (initial: number): Spring<number>;
+	new <T extends SpringAllowedValues>(initial: T): Spring<T>;
 }
 
 declare const Spring: SpringConstructor;

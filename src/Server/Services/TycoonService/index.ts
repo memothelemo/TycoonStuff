@@ -3,6 +3,7 @@ import Binder from "@rbxts/binder";
 import Option, { IOption } from "@rbxts/option";
 import Remotes from "Shared/Remotes";
 import { getRandomArrayMember } from "Shared/Util/getRandomArrayMember";
+
 import { Tycoon } from "./Tycoon";
 
 @Service({})

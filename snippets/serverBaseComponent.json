@@ -1,0 +1,22 @@
+{
+	"ServerBaseComponent": {
+		"prefix": "serverbasecomponent",
+		"body": [
+			"import type { Tycoon } from \"Server/Services/TycoonService/Tycoon\";",
+			"import type { TycoonServerBaseComponent } from \"../../../../typings/tycoon\";",
+			"",
+			"/** @hidden */",
+			"class ${0:$TM_FILENAME_BASE} implements TycoonServerBaseComponent {",
+			"\tpublic constructor(public instance: Model, public tycoon: Tycoon) {}",
+			"",
+			"\tpublic init(): void {}",
+			"",
+			"\tpublic destroy(): void {}",
+			"}",
+			"",
+			"export = ${0:$TM_FILENAME_BASE};",
+			""
+		],
+		"description": "memothelemo/SomewhatTycoon's TycoonServerBaseComponent boilerplate"
+	}
+}

@@ -18,6 +18,5 @@ interface TycoonServerBaseComponent {
 	instance: Model | Part;
 
 	init(): void;
-	onSpawn(): void;
 	destroy(): void;
 }
