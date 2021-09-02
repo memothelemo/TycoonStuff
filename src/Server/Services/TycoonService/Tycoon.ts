@@ -73,7 +73,7 @@ function doObjectAnimation(model: Model): void {
 			}
 
 			const position = spring.GetPosition();
-			highlighter.setTransparency(lerpNumber(1, 0, timer / TARGET_ANIMATION_TIME));
+			highlighter.setTransparencyLerp(lerpNumber(1, 0, timer / TARGET_ANIMATION_TIME));
 			model.SetPrimaryPartCFrame(baseCFrame.ToWorldSpace(new CFrame(0, lerpNumber(RISE_FROM_Y, 0, position), 0)));
 		});
 	})
