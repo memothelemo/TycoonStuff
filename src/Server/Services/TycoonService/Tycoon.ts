@@ -195,6 +195,8 @@ export class Tycoon implements BinderClass {
 		const convertedClass = componentClass as unknown as Constructor<TycoonServerBaseComponent>;
 		const component = new convertedClass(instance, this);
 
+		component.init();
+
 		return component;
 	}
 
