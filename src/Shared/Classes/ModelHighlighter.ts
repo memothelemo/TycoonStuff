@@ -1,4 +1,5 @@
 import { t } from "@rbxts/t";
+import { lerpNumber } from "Shared/Util/lerpNumber";
 
 interface CacheInfo {
 	transparency: number;
@@ -42,6 +43,10 @@ export class ModelHighlighter {
 
 	public setCanCollide(canCollide: boolean): void {
 		this._cache.forEach((_, part) => (part.CanCollide = canCollide));
+	}
+
+	public setTransparencyLerp(lerpAlpha: number): void {
+		this._cache.forEach((info, part) => (part.Transparency = lerpNumber(info.transparency, 1, lerpAlpha)));
 	}
 
 	public setTransparency(transparency: number): void {
