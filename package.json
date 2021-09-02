@@ -7,9 +7,10 @@
     "build": "rbxtsc",
     "build-game": "npm run build && rojo build -o ./game.rbxlx",
     "lint": "npx eslint src --max-warnings 0",
+	"lint-fix": "",
     "watch": "rbxtsc -w",
     "serve": "rojo serve",
-	"test": "npm run build-game && npm run test-run",
+    "test": "npm run build-game && npm run test-run",
     "test-run": "run-in-roblox --place ./game.rbxlx --script ./out/Server/testBootstrap.server.lua"
   },
   "devDependencies": {
@@ -21,6 +22,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-roblox-ts": "^0.0.30",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "prettier": "^2.3.2",
     "typescript": "^4.4.2"
   },

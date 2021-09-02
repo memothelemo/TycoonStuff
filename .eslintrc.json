@@ -9,8 +9,10 @@
 	},
 	"plugins": [
 		"@typescript-eslint",
+		"@typescript-eslint/eslint-plugin",
 		"roblox-ts",
-		"prettier"
+		"prettier",
+		"simple-import-sort"
 	],
 	"extends": [
 		"plugin:@typescript-eslint/recommended",
@@ -33,6 +35,8 @@
 				"tabWidth": 4,
 				"useTabs": true
 			}
-		]
+		],
+		"simple-import-sort/imports": "warn",
+    	"simple-import-sort/exports": "warn"
 	}
 }
