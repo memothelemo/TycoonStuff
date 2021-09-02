@@ -5,8 +5,8 @@ import { RunService } from "@rbxts/services";
 import { validateTree } from "@rbxts/validate-tree";
 import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 
-import type { TycoonServerBaseComponent } from "../../../../typings/tycoon";
-import { BaseOre } from "./Ores/BaseOre";
+import type { TycoonServerBaseComponent } from "../../../../../typings/tycoon";
+import { BaseOre } from "../Ores/BaseOre";
 
 interface DropperAttributes {
 	Rate: number;
@@ -29,7 +29,7 @@ const ORE_SIZE = new Vector3(1, 1, 1);
 const DEFAULT_WORTH = 1;
 
 /** @hidden */
-class Dropper implements TycoonServerBaseComponent {
+class BaseDropper implements TycoonServerBaseComponent {
 	private _realInstance: DropperModel;
 	private _attributes: Attributes<DropperAttributes>;
 
@@ -90,4 +90,4 @@ class Dropper implements TycoonServerBaseComponent {
 	}
 }
 
-export = Dropper;
+export = BaseDropper;
