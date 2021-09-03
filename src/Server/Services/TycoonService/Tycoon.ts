@@ -72,8 +72,6 @@ function doObjectAnimation(model: Model): void {
 
 			timer += dt;
 
-			print(timer);
-
 			if (timer >= TARGET_ANIMATION_TIME) {
 				isResolved = true;
 				model.SetPrimaryPartCFrame(baseCFrame);
