@@ -2,7 +2,7 @@ function waitForFirst(signals: RBXScriptSignal[]): LuaTuple<unknown[]> {
 	const shunt = new Instance("BindableEvent");
 	const connected = new Array<RBXScriptConnection>();
 
-	const fire = (args: unknown[]): void => {
+	const fire = (...args: unknown[]): void => {
 		connected.forEach(connection => {
 			connection.Disconnect();
 		});
