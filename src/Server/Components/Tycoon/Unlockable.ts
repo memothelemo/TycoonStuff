@@ -2,7 +2,7 @@ import Attributes from "@memolemo-studios/rbxts-attributes";
 import { Janitor } from "@rbxts/janitor";
 import { RunService, Workspace } from "@rbxts/services";
 import { validateTree } from "@rbxts/validate-tree";
-import { TARGET_ANIMATION_TIME } from "Server/Constants/animation";
+import { BUTTON_ANIMATION_TIME } from "Server/Constants/animation";
 import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 import { getPlayerFromCharacter } from "Shared/Util/getPlayerFromCharacter";
 import { lerpNumber } from "Shared/Util/lerpNumber";
@@ -93,7 +93,7 @@ class Unlockable implements TycoonServerBaseComponent {
 
 		connection = RunService.Heartbeat.Connect(dt => {
 			timer += dt;
-			if (timer >= TARGET_ANIMATION_TIME || this._button === undefined) {
+			if (timer >= BUTTON_ANIMATION_TIME || this._button === undefined) {
 				return connection.Disconnect();
 			}
 

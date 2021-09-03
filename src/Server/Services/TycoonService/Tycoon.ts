@@ -9,7 +9,7 @@ import { t } from "@rbxts/t";
 import { validateTree } from "@rbxts/validate-tree";
 import { $instance } from "rbxts-transformer-fs";
 import type Unlockable from "Server/Components/Tycoon/Unlockable";
-import { TARGET_ANIMATION_TIME } from "Server/Constants/animation";
+import { OBJECT_SPAWN_ANIMATION_TIME } from "Server/Constants/animation";
 import { ModelHighlighter } from "Shared/Classes/ModelHighlighter";
 import { findFirstDescendant } from "Shared/Util/findFirstDescendant";
 import { lerpNumber } from "Shared/Util/lerpNumber";
@@ -73,7 +73,7 @@ function doObjectAnimation(model: Model): void {
 
 			timer += dt;
 
-			if (timer >= TARGET_ANIMATION_TIME) {
+			if (timer >= OBJECT_SPAWN_ANIMATION_TIME) {
 				isResolved = true;
 				model.SetPrimaryPartCFrame(baseCFrame);
 				connection.Disconnect();
@@ -82,7 +82,7 @@ function doObjectAnimation(model: Model): void {
 			}
 
 			const position = spring.GetPosition();
-			highlighter.setTransparencyLerp(lerpNumber(1, 0, timer / TARGET_ANIMATION_TIME));
+			highlighter.setTransparencyLerp(lerpNumber(1, 0, timer / OBJECT_SPAWN_ANIMATION_TIME));
 			model.SetPrimaryPartCFrame(baseCFrame.ToWorldSpace(new CFrame(0, lerpNumber(RISE_FROM_Y, 0, position), 0)));
 		});
 	})
@@ -224,7 +224,7 @@ export class Tycoon implements BinderClass {
 
 				instance.Parent = this.Instance.Components;
 
-				// fancy animations
+				// fancy animsations
 				unlockable.setButtonVisibility(false, false);
 				doObjectAnimation(instance);
 
