@@ -95,19 +95,19 @@ class Unlockable implements TycoonServerBaseComponent {
 		this._button.CanCollide = bool;
 
 		const spring = new Spring<number>(0);
-		spring.SetDamper(1).SetSpeed(9).SetTarget(1);
+		spring.SetDamper(1).SetSpeed(20).SetTarget(1);
 
 		let timer = 0;
 		let connection: RBXScriptConnection;
 
 		connection = RunService.Heartbeat.Connect(dt => {
+			const position = spring.GetPosition();
+			this._button.Transparency = lerpNumber(base, goal, position);
+
 			timer += dt;
 			if (timer >= BUTTON_ANIMATION_TIME || this._button === undefined) {
 				return connection.Disconnect();
 			}
-
-			const position = spring.GetPosition();
-			this._button.Transparency = lerpNumber(base, goal, position);
 		});
 
 		if (this._button !== undefined) {
