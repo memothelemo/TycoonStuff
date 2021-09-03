@@ -5,6 +5,10 @@ import { Profile } from "@rbxts/profileservice/globals";
 import { Players } from "@rbxts/services";
 import Signal from "@rbxts/signal";
 
+interface Leaderstats extends Folder {
+	Cash: NumberValue;
+}
+
 export interface PlayerData {
 	cash: number;
 }
@@ -61,6 +65,23 @@ export class DataService implements OnInit {
 		return Option.Wrap(Profiles.get(player)!);
 	}
 
+	public getLeaderstats(player: Player): IOption<Leaderstats> {
+		return Option.Wrap(player.FindFirstChild("leaderstats") as Leaderstats);
+	}
+
+	private _createLeaderstatsBoilerplate(player: Player, profile: Profile<PlayerData>): Leaderstats {
+		const leaderstats = new Instance("Folder") as Leaderstats;
+		leaderstats.Name = "leaderstats";
+		leaderstats.Parent = player;
+
+		const cash = new Instance("NumberValue");
+		cash.Name = "Cash";
+		cash.Parent = leaderstats;
+		cash.Value = profile.Data.cash;
+
+		return leaderstats;
+	}
+
 	private _playerAdded(player: Player): void {
 		const profile = ProfileStore.LoadProfileAsync(`player_${player.UserId}`);
 
@@ -87,6 +108,7 @@ export class DataService implements OnInit {
 		}
 
 		Profiles.set(player, profile);
+		this._createLeaderstatsBoilerplate(player, profile);
 		this.playerAdded.Fire(player, profile);
 	}
 
