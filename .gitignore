@@ -6,7 +6,7 @@
 # I do not include assets when I make open source projects
 # I supposed to upload it somehow but it caused alot of issues
 # when I decided to commit it on Git
-assets
+/assets
 
 # Dump files
 *.tsbuildinfo
