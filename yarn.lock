@@ -156,6 +156,11 @@
   resolved "https://registry.yarnpkg.com/@rbxts/profileservice/-/profileservice-1.4.0.tgz#83d8b44b2f6f9876fc4031743e9478abb68808d1"
   integrity sha512-K9uCwgi4j/Kdc5mYve9yDEycmtMPKUK319GPMP5vzTJg2+Hi4gBI5uruKorQxqPRH9xduSIo6ZOAfPCDcEda0g==
 
+"@rbxts/roact@^1.4.0-ts.2":
+  version "1.4.0-ts.2"
+  resolved "https://registry.yarnpkg.com/@rbxts/roact/-/roact-1.4.0-ts.2.tgz#4b8c6067f71638b10fd27f9482204838296dbe7f"
+  integrity sha512-JnbezUhKiVs8ID0cjjmYeGdf4N/Uao8BEMqNQSHUjOOKAI1GVBW2txRE3wUD3Svmw2PMtgCUJAa4mLEKutsQiA==
+
 "@rbxts/services@^1.1.4", "@rbxts/services@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@rbxts/services/-/services-1.2.0.tgz#5dcc980fc937d5634dab31f8e564f6565d78ea47"

@@ -17,6 +17,11 @@
 		"tycoonstuff:out/Server/Components/Tycoon/Droppers/BaseDropper@BaseDropper": "tycoonstuff:out/Server/Components/Tycoon/Droppers/BaseDropper@BaseDropper",
 		"tycoonstuff:out/Server/Components/Tycoon/Conveyors/BaseConveyor@BaseConveyor": "tycoonstuff:out/Server/Components/Tycoon/Conveyors/BaseConveyor@BaseConveyor",
 		"tycoonstuff:out/Server/Components/Tycoon/Collector@Collector": "tycoonstuff:out/Server/Components/Tycoon/Collector@Collector",
-		"tycoonstuff:out/Server/Components/Tycoon/Furnace@Furnace": "tycoonstuff:out/Server/Components/Tycoon/Furnace@Furnace"
+		"tycoonstuff:out/Server/Components/Tycoon/Furnace@Furnace": "tycoonstuff:out/Server/Components/Tycoon/Furnace@Furnace",
+		"tycoonstuff:out/Server/Components/Tycoon/Unlockable/Unlockable@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/Unlockable/Unlockable@Unlockable",
+		"tycoonstuff:out/Server/Components/Tycoon/Unlockable/init@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/Unlockable/init@Unlockable",
+		"tycoonstuff:out/Server/Components/Tycoon/init@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/init@Unlockable",
+		"tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboard": "tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboard",
+		"tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboardUI": "tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboardUI"
 	}
 }

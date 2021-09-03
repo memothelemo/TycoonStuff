@@ -3,6 +3,7 @@ import { Janitor } from "@rbxts/janitor";
 import { RunService, Workspace } from "@rbxts/services";
 import { validateTree } from "@rbxts/validate-tree";
 import { BUTTON_ANIMATION_TIME } from "Server/Constants/animation";
+import { ButtonBillboard } from "Server/Services/TycoonService/ButtonBillboard";
 import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 import { getPlayerFromCharacter } from "Shared/Util/getPlayerFromCharacter";
 import { lerpNumber } from "Shared/Util/lerpNumber";
@@ -19,6 +20,7 @@ declare global {
 interface UnlockableAttributes {
 	Price: number;
 	Dependency: string;
+	DisplayName: string;
 }
 
 interface UnlockableModel extends Model {
@@ -45,6 +47,7 @@ class Unlockable implements TycoonServerBaseComponent {
 	private _attributes: Attributes<UnlockableAttributes>;
 
 	private _button!: Part;
+
 	private _debounce = true;
 
 	public constructor(public instance: Model, public tycoon: Tycoon) {
@@ -66,6 +69,12 @@ class Unlockable implements TycoonServerBaseComponent {
 		assert(
 			depTypeof === "string" || depTypeof === "nil",
 			invalidateAttrib(instance, "Dependency", "nil or string", depTypeof),
+		);
+
+		const displayNameTypeof = typeOf(this._attributes.get("DisplayName"));
+		assert(
+			displayNameTypeof === "string" || displayNameTypeof === "nil",
+			invalidateAttrib(instance, "DisplayName", "nil or string", depTypeof),
 		);
 	}
 
@@ -168,7 +177,16 @@ class Unlockable implements TycoonServerBaseComponent {
 	}
 
 	public init(): void {
+		const displayName = this._attributes.get("DisplayName");
+
 		this._button = (this.instance as UnlockableModel).Button;
+		const billboard = new ButtonBillboard(
+			this._button,
+			this._attributes.get("Price"),
+			displayName ?? this.instance.Name,
+		);
+
+		this._janitor.Add(billboard, "destroy");
 
 		// run if it has no dependents
 		if (!this._attributes.has("Dependency")) {

@@ -36,6 +36,7 @@
     "@rbxts/net": "^2.1.4",
     "@rbxts/option": "^1.0.1",
     "@rbxts/profileservice": "^1.4.0",
+    "@rbxts/roact": "^1.4.0-ts.2",
     "@rbxts/services": "^1.2.0",
     "@rbxts/signal": "^1.0.3",
     "@rbxts/t": "^2.1.5",
