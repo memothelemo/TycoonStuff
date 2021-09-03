@@ -33,6 +33,7 @@ const tycoonModelCheck = (instance: Instance): instance is TycoonModel =>
 		$className: "Model",
 		Components: "Folder",
 		Ores: "Folder",
+		Spawn: "SpawnLocation",
 	});
 
 const moduleStorage = $instance<Folder>("src/Server/Components/Tycoon");
@@ -161,6 +162,7 @@ export class Tycoon implements BinderClass {
 			}
 
 			this._attributes.set("Owner", player.UserId);
+			player.RespawnLocation = this.Instance.Spawn;
 			resolve();
 		});
 	}
