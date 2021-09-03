@@ -51,6 +51,7 @@ let tycoonService: TycoonService;
 function doObjectAnimation(model: Model): void {
 	const highlighter = new ModelHighlighter(model, [model.PrimaryPart!]);
 	highlighter.setTransparency(1);
+	highlighter.setCanCollide(false);
 
 	wait(0.2);
 
