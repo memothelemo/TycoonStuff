@@ -89,8 +89,11 @@ export class Tycoon implements BinderClass {
 	private _components = new Map<string, Unlockable>();
 	private _attributes: Attributes<TycoonAttributes>;
 
+	private _collectedCash = 0;
+
 	public Instance: TycoonModel;
 	public objectUnlocked = new Signal<(name: string) => void>();
+	public collectedCash = new Signal<(newAmount: number) => void>();
 
 	public constructor(instance: Instance) {
 		// every tycoon must be a model class
@@ -107,6 +110,33 @@ export class Tycoon implements BinderClass {
 		if (!CashService) {
 			CashService = Dependency<CashServiceType>();
 		}
+	}
+
+	// Collector
+	public collectCollectedCash(): Promise<void> {
+		return new Promise<void>((resolve, reject) => {
+			this.getOwner().Match({
+				Some: player =>
+					CashService.setFromPlayer(player, oldValue => {
+						const newCash = this._collectedCash + oldValue;
+						this._collectedCash = 0;
+
+						resolve();
+
+						return newCash;
+					}),
+				None: () => reject(`No owner!`),
+			});
+		});
+	}
+
+	public increaseCollectedCash(amount: number): void {
+		this._collectedCash += amount;
+		this.collectedCash.Fire(this._collectedCash);
+	}
+
+	public getCollectedCash(): number {
+		return this._collectedCash;
 	}
 
 	// Owner stuff

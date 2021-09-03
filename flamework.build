@@ -15,6 +15,7 @@
 		"tycoonstuff:out/Server/Components/Tycoon/Droppers/Dropper@Dropper": "tycoonstuff:out/Server/Components/Tycoon/Droppers/Dropper@Dropper",
 		"tycoonstuff:out/Server/Components/Tycoon/Droppers/BaseDropper@Dropper": "tycoonstuff:out/Server/Components/Tycoon/Droppers/BaseDropper@Dropper",
 		"tycoonstuff:out/Server/Components/Tycoon/Droppers/BaseDropper@BaseDropper": "tycoonstuff:out/Server/Components/Tycoon/Droppers/BaseDropper@BaseDropper",
-		"tycoonstuff:out/Server/Components/Tycoon/Conveyors/BaseConveyor@BaseConveyor": "tycoonstuff:out/Server/Components/Tycoon/Conveyors/BaseConveyor@BaseConveyor"
+		"tycoonstuff:out/Server/Components/Tycoon/Conveyors/BaseConveyor@BaseConveyor": "tycoonstuff:out/Server/Components/Tycoon/Conveyors/BaseConveyor@BaseConveyor",
+		"tycoonstuff:out/Server/Components/Tycoon/Collector@Collector": "tycoonstuff:out/Server/Components/Tycoon/Collector@Collector"
 	}
 }
