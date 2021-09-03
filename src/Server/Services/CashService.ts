@@ -31,6 +31,15 @@ export class CashService implements OnStart {
 			DataService.getFromPlayer(player).Match({
 				Some: profile => {
 					profile.Data.cash = setter(profile.Data.cash);
+
+					// updating their leaderstats
+					DataService.getLeaderstats(player).Match({
+						Some: leaderstats => {
+							leaderstats.Cash.Value = profile.Data.cash;
+						},
+						None: () => {},
+					});
+
 					resolve();
 				},
 				None: () => reject(`${player.Name}'s cash is not loaded`),
