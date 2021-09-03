@@ -130,7 +130,7 @@ export class Tycoon implements BinderClass {
 		});
 	}
 
-	public increaseCollectedCash(amount: number): void {
+	public earnCollectedCash(amount: number): void {
 		this._collectedCash += amount;
 		this.collectedCash.Fire(this._collectedCash);
 	}

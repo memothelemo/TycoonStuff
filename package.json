@@ -7,7 +7,7 @@
     "build": "rbxtsc",
     "build-game": "npm run build && rojo build -o ./game.rbxlx",
     "lint": "npx eslint src --max-warnings 0",
-	"lint-fix": "npx eslint src --fix",
+    "lint-fix": "npx eslint src --fix",
     "watch": "rbxtsc -w",
     "serve": "rojo serve",
     "test": "npm run build-game && npm run test-run",
