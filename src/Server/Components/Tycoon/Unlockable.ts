@@ -36,7 +36,7 @@ const invalidateAttrib = (
 const validateUnlockableModel = (instance: Model): boolean =>
 	validateTree(instance, {
 		$className: "Model",
-		Button: "Part",
+		Button: "BasePart",
 	});
 
 /** @hidden */
