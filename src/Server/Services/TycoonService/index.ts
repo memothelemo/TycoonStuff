@@ -3,6 +3,7 @@ import Binder from "@rbxts/binder";
 import Option, { IOption } from "@rbxts/option";
 import { Players } from "@rbxts/services";
 import Remotes from "Shared/Remotes";
+import { betterCharacterAdded } from "Shared/Util/betterCharacterAdded";
 import { getRandomArrayMember } from "Shared/Util/getRandomArrayMember";
 
 import { TycoonModel } from "../../../../typings/tycoon";
@@ -45,6 +46,19 @@ export class TycoonService implements OnInit {
 			});
 		};
 
+		const playerAdded = (player: Player): void => {
+			// captures player's death
+			betterCharacterAdded(player, (character, rootPart, humanoid) => {
+				let conn: RBXScriptConnection;
+				conn = humanoid.Died.Connect(() => {
+					// let them respawn
+					conn.Disconnect();
+					player.LoadCharacter();
+				});
+			});
+		};
+
+		Players.PlayerAdded.Connect(playerAdded);
 		Players.PlayerRemoving.Connect(playerRemoving);
 
 		// responding player remotes
@@ -53,6 +67,12 @@ export class TycoonService implements OnInit {
 			return (
 				this.assignVacantTycoon(player)
 					.then(() => print(`${player.Name} owned a tycoon now!`))
+					.then(() => {
+						// spawn the character if they haven't spawned yet
+						if (player.Character === undefined) {
+							player.LoadCharacter();
+						}
+					})
 					.catch(e => warn(e))
 					.awaitStatus()[0] === Promise.Status.Resolved
 			);

@@ -26,11 +26,20 @@ export class CashService implements OnStart {
 		});
 	}
 
-	public setFromPlayer(player: Player, amount: number): Promise<void> {
+	public setFromPlayer(player: Player, setter: (oldValue: number) => number): Promise<void> {
 		return new Promise((resolve, reject) => {
 			DataService.getFromPlayer(player).Match({
 				Some: profile => {
-					profile.Data.cash = amount;
+					profile.Data.cash = setter(profile.Data.cash);
+
+					// updating their leaderstats
+					DataService.getLeaderstats(player).Match({
+						Some: leaderstats => {
+							leaderstats.Cash.Value = profile.Data.cash;
+						},
+						None: () => {},
+					});
+
 					resolve();
 				},
 				None: () => reject(`${player.Name}'s cash is not loaded`),

@@ -125,7 +125,7 @@ _For MacOS users, I don't know how to install it. :D_
 
 ## FAQ
 
-**Why does your code looks messy?:**
+**Why does your code looks messy inside ROBLOX Studio?:**
 
 It is messy because it is not my fault.
 

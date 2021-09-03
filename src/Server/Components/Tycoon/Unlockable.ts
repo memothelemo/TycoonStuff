@@ -2,7 +2,8 @@ import Attributes from "@memolemo-studios/rbxts-attributes";
 import { Janitor } from "@rbxts/janitor";
 import { RunService, Workspace } from "@rbxts/services";
 import { validateTree } from "@rbxts/validate-tree";
-import { TARGET_ANIMATION_TIME } from "Server/Constants/animation";
+import { BUTTON_ANIMATION_TIME } from "Server/Constants/animation";
+import { ButtonBillboard } from "Server/Services/TycoonService/ButtonBillboard";
 import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 import { getPlayerFromCharacter } from "Shared/Util/getPlayerFromCharacter";
 import { lerpNumber } from "Shared/Util/lerpNumber";
@@ -19,6 +20,7 @@ declare global {
 interface UnlockableAttributes {
 	Price: number;
 	Dependency: string;
+	DisplayName: string;
 }
 
 interface UnlockableModel extends Model {
@@ -36,7 +38,7 @@ const invalidateAttrib = (
 const validateUnlockableModel = (instance: Model): boolean =>
 	validateTree(instance, {
 		$className: "Model",
-		Button: "Part",
+		Button: "BasePart",
 	});
 
 /** @hidden */
@@ -45,11 +47,13 @@ class Unlockable implements TycoonServerBaseComponent {
 	private _attributes: Attributes<UnlockableAttributes>;
 
 	private _button!: Part;
+
 	private _debounce = true;
 
 	public constructor(public instance: Model, public tycoon: Tycoon) {
 		// validating model tree
 		assert(validateUnlockableModel(instance), "Be sure to have a button on it!");
+		assert(instance.PrimaryPart, `${instance.GetFullName()} has no PrimaryPart!`);
 
 		this._attributes = new Attributes(this.instance);
 
@@ -66,32 +70,44 @@ class Unlockable implements TycoonServerBaseComponent {
 			depTypeof === "string" || depTypeof === "nil",
 			invalidateAttrib(instance, "Dependency", "nil or string", depTypeof),
 		);
+
+		const displayNameTypeof = typeOf(this._attributes.get("DisplayName"));
+		assert(
+			displayNameTypeof === "string" || displayNameTypeof === "nil",
+			invalidateAttrib(instance, "DisplayName", "nil or string", depTypeof),
+		);
 	}
 
-	public setButtonVisibility(bool: boolean): void {
+	public setButtonVisibility(bool: boolean, force: boolean): void {
 		const goal = bool ? 0 : 1;
 		const base = bool ? 1 : 0;
 
-		if (this._button) {
-			if (this._button.Transparency === goal) {
-				return;
+		if (force) {
+			if (this._button) {
+				this._button.Transparency = goal;
+				this._button.CanCollide = bool;
 			}
+			return;
 		}
 
-		const spring = new Spring<number>(base);
-		spring.SetDamper(1).SetSpeed(9).SetTarget(goal);
+		// preparations
+		this._button.Transparency = base;
+		this._button.CanCollide = bool;
+
+		const spring = new Spring<number>(0);
+		spring.SetDamper(1).SetSpeed(20).SetTarget(1);
 
 		let timer = 0;
 		let connection: RBXScriptConnection;
 
 		connection = RunService.Heartbeat.Connect(dt => {
-			timer += dt;
-			if (timer >= TARGET_ANIMATION_TIME || this._button === undefined) {
-				return connection.Disconnect();
-			}
-
 			const position = spring.GetPosition();
 			this._button.Transparency = lerpNumber(base, goal, position);
+
+			timer += dt;
+			if (timer >= BUTTON_ANIMATION_TIME || this._button === undefined) {
+				return connection.Disconnect();
+			}
 		});
 
 		if (this._button !== undefined) {
@@ -113,9 +129,9 @@ class Unlockable implements TycoonServerBaseComponent {
 		});
 	}
 
-	private listenButtonTouches(): void {
+	private listenButtonTouches(force: boolean): void {
 		// assigning button to the tycoon instance?
-		this.setButtonVisibility(true);
+		this.setButtonVisibility(true, force);
 		this._button.Parent = this.tycoon.Instance.Components;
 		this._janitor.Add(this._button);
 
@@ -135,12 +151,13 @@ class Unlockable implements TycoonServerBaseComponent {
 		if (dependentUnlockable) {
 			return dependentUnlockable.isSpawned();
 		}
+
 		return false;
 	}
 
-	private updateOnSpawn(): boolean {
+	private updateOnSpawn(force: boolean): boolean {
 		if (this.canListen()) {
-			this.listenButtonTouches();
+			this.listenButtonTouches(force);
 			return true;
 		}
 		return false;
@@ -160,19 +177,28 @@ class Unlockable implements TycoonServerBaseComponent {
 	}
 
 	public init(): void {
+		const displayName = this._attributes.get("DisplayName");
+
 		this._button = (this.instance as UnlockableModel).Button;
+		const billboard = new ButtonBillboard(
+			this._button,
+			this._attributes.get("Price"),
+			displayName ?? this.instance.Name,
+		);
+
+		this._janitor.Add(billboard, "destroy");
 
 		// run if it has no dependents
 		if (!this._attributes.has("Dependency")) {
-			return this.listenButtonTouches();
+			return this.listenButtonTouches(true);
 		}
 
 		// update in advance
-		this.updateOnSpawn();
+		this.updateOnSpawn(true);
 
 		let connection: RBXScriptConnection;
 		connection = this.tycoon.objectUnlocked.Connect(() => {
-			if (this.updateOnSpawn()) {
+			if (this.updateOnSpawn(false)) {
 				connection.Disconnect();
 			}
 		});

@@ -28,6 +28,7 @@ export class BaseOre {
 		const worthValue = new Instance("NumberValue");
 		worthValue.Name = "Worth";
 		worthValue.Value = worth;
+		worthValue.Parent = instance;
 
 		// assign ore to the CollectionService (useful for later :D)
 		CollectionService.AddTag(instance, ORE_TAG_NAME);

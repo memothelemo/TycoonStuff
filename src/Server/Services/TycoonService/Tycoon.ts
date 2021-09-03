@@ -1,6 +1,7 @@
 import { Dependency } from "@flamework/core";
 import Attributes from "@memolemo-studios/rbxts-attributes";
 import { BinderClass } from "@rbxts/binder";
+import { wait } from "@rbxts/delay-spawn-wait";
 import Option, { IOption } from "@rbxts/option";
 import { CollectionService, Players, RunService, ServerStorage } from "@rbxts/services";
 import Signal from "@rbxts/signal";
@@ -8,7 +9,7 @@ import { t } from "@rbxts/t";
 import { validateTree } from "@rbxts/validate-tree";
 import { $instance } from "rbxts-transformer-fs";
 import type Unlockable from "Server/Components/Tycoon/Unlockable";
-import { TARGET_ANIMATION_TIME } from "Server/Constants/animation";
+import { OBJECT_SPAWN_ANIMATION_TIME } from "Server/Constants/animation";
 import { ModelHighlighter } from "Shared/Classes/ModelHighlighter";
 import { findFirstDescendant } from "Shared/Util/findFirstDescendant";
 import { lerpNumber } from "Shared/Util/lerpNumber";
@@ -33,6 +34,7 @@ const tycoonModelCheck = (instance: Instance): instance is TycoonModel =>
 		$className: "Model",
 		Components: "Folder",
 		Ores: "Folder",
+		Spawn: "SpawnLocation",
 	});
 
 const moduleStorage = $instance<Folder>("src/Server/Components/Tycoon");
@@ -48,11 +50,17 @@ let tycoonService: TycoonService;
 
 function doObjectAnimation(model: Model): void {
 	const highlighter = new ModelHighlighter(model, [model.PrimaryPart!]);
-	const spring = new Spring<number>(0);
-	const baseCFrame = model.PrimaryPart!.CFrame;
-	spring.SetDamper(0.4).SetSpeed(13.4).SetClock(os.clock).SetTarget(1);
+	highlighter.setTransparency(1);
+	highlighter.setCanCollide(false);
+
+	wait(0.2);
 
 	new Promise<void>(resolve => {
+		const spring = new Spring<number>(0);
+		const baseCFrame = model.PrimaryPart!.CFrame;
+
+		spring.SetDamper(0.4).SetSpeed(13.4).SetTarget(1);
+
 		let timer = 0;
 		let connection: RBXScriptConnection;
 		let isResolved = false;
@@ -64,16 +72,17 @@ function doObjectAnimation(model: Model): void {
 			}
 
 			timer += dt;
-			if (timer >= TARGET_ANIMATION_TIME) {
+
+			if (timer >= OBJECT_SPAWN_ANIMATION_TIME) {
 				isResolved = true;
 				model.SetPrimaryPartCFrame(baseCFrame);
 				connection.Disconnect();
 				highlighter.reset();
-				resolve();
+				return resolve();
 			}
 
 			const position = spring.GetPosition();
-			highlighter.setTransparencyLerp(lerpNumber(1, 0, timer / TARGET_ANIMATION_TIME));
+			highlighter.setTransparencyLerp(lerpNumber(1, 0, timer / OBJECT_SPAWN_ANIMATION_TIME));
 			model.SetPrimaryPartCFrame(baseCFrame.ToWorldSpace(new CFrame(0, lerpNumber(RISE_FROM_Y, 0, position), 0)));
 		});
 	})
@@ -89,8 +98,11 @@ export class Tycoon implements BinderClass {
 	private _components = new Map<string, Unlockable>();
 	private _attributes: Attributes<TycoonAttributes>;
 
+	private _collectedCash = 0;
+
 	public Instance: TycoonModel;
 	public objectUnlocked = new Signal<(name: string) => void>();
+	public collectedCash = new Signal<(newAmount: number) => void>();
 
 	public constructor(instance: Instance) {
 		// every tycoon must be a model class
@@ -107,6 +119,33 @@ export class Tycoon implements BinderClass {
 		if (!CashService) {
 			CashService = Dependency<CashServiceType>();
 		}
+	}
+
+	// Collector
+	public collectCollectedCash(): Promise<void> {
+		return new Promise<void>((resolve, reject) => {
+			this.getOwner().Match({
+				Some: player =>
+					CashService.setFromPlayer(player, oldValue => {
+						const newCash = this._collectedCash + oldValue;
+						this._collectedCash = 0;
+
+						resolve();
+
+						return newCash;
+					}),
+				None: () => reject(`No owner!`),
+			});
+		});
+	}
+
+	public earnCollectedCash(amount: number): void {
+		this._collectedCash += amount;
+		this.collectedCash.Fire(this._collectedCash);
+	}
+
+	public getCollectedCash(): number {
+		return this._collectedCash;
 	}
 
 	// Owner stuff
@@ -131,6 +170,7 @@ export class Tycoon implements BinderClass {
 			}
 
 			this._attributes.set("Owner", player.UserId);
+			player.RespawnLocation = this.Instance.Spawn;
 			resolve();
 		});
 	}
@@ -184,8 +224,8 @@ export class Tycoon implements BinderClass {
 
 				instance.Parent = this.Instance.Components;
 
-				// fancy animations
-				unlockable.setButtonVisibility(false);
+				// fancy animsations
+				unlockable.setButtonVisibility(false, false);
 				doObjectAnimation(instance);
 
 				this.objectUnlocked.Fire(instance.Name);
@@ -206,11 +246,6 @@ export class Tycoon implements BinderClass {
 			}
 
 			if (!model.IsA("Model")) continue;
-
-			// require PrimaryPart
-			if (!model.PrimaryPart) {
-				continue;
-			}
 
 			if (CollectionService.HasTag(model, "Unlockable")) {
 				this.lockComponent(model);
