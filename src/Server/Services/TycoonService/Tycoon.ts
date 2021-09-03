@@ -225,7 +225,7 @@ export class Tycoon implements BinderClass {
 				instance.Parent = this.Instance.Components;
 
 				// fancy animations
-				unlockable.setButtonVisibility(false);
+				unlockable.setButtonVisibility(false, false);
 				doObjectAnimation(instance);
 
 				this.objectUnlocked.Fire(instance.Name);

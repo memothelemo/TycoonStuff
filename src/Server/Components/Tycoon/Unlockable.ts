@@ -69,18 +69,24 @@ class Unlockable implements TycoonServerBaseComponent {
 		);
 	}
 
-	public setButtonVisibility(bool: boolean): void {
+	public setButtonVisibility(bool: boolean, force: boolean): void {
 		const goal = bool ? 0 : 1;
 		const base = bool ? 1 : 0;
 
-		if (this._button) {
-			if (this._button.Transparency === goal) {
-				return;
+		if (force) {
+			if (this._button) {
+				this._button.Transparency = goal;
+				this._button.CanCollide = bool;
 			}
+			return;
 		}
 
-		const spring = new Spring<number>(base);
-		spring.SetDamper(1).SetSpeed(9).SetTarget(goal);
+		// preparations
+		this._button.Transparency = base;
+		this._button.CanCollide = bool;
+
+		const spring = new Spring<number>(0);
+		spring.SetDamper(1).SetSpeed(9).SetTarget(1);
 
 		let timer = 0;
 		let connection: RBXScriptConnection;
@@ -114,9 +120,9 @@ class Unlockable implements TycoonServerBaseComponent {
 		});
 	}
 
-	private listenButtonTouches(): void {
+	private listenButtonTouches(force: boolean): void {
 		// assigning button to the tycoon instance?
-		this.setButtonVisibility(true);
+		this.setButtonVisibility(true, force);
 		this._button.Parent = this.tycoon.Instance.Components;
 		this._janitor.Add(this._button);
 
@@ -136,12 +142,13 @@ class Unlockable implements TycoonServerBaseComponent {
 		if (dependentUnlockable) {
 			return dependentUnlockable.isSpawned();
 		}
+
 		return false;
 	}
 
-	private updateOnSpawn(): boolean {
+	private updateOnSpawn(force: boolean): boolean {
 		if (this.canListen()) {
-			this.listenButtonTouches();
+			this.listenButtonTouches(force);
 			return true;
 		}
 		return false;
@@ -165,15 +172,15 @@ class Unlockable implements TycoonServerBaseComponent {
 
 		// run if it has no dependents
 		if (!this._attributes.has("Dependency")) {
-			return this.listenButtonTouches();
+			return this.listenButtonTouches(true);
 		}
 
 		// update in advance
-		this.updateOnSpawn();
+		this.updateOnSpawn(true);
 
 		let connection: RBXScriptConnection;
 		connection = this.tycoon.objectUnlocked.Connect(() => {
-			if (this.updateOnSpawn()) {
+			if (this.updateOnSpawn(false)) {
 				connection.Disconnect();
 			}
 		});
