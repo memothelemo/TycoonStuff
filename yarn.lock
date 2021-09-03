@@ -121,6 +121,11 @@
   resolved "https://registry.yarnpkg.com/@rbxts/compiler-types/-/compiler-types-1.2.3-types.0.tgz#f6354b379c4c74fd52343675c662e65518e6eb95"
   integrity sha512-8dpU2CJjlinesUdWHdzhtt4oif9VkWgZzPQ61BIN+244CO7EfRBZ4tCEdNrmFjKiba2LZWOsDaMKn6Ui40tpTQ==
 
+"@rbxts/delay-spawn-wait@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@rbxts/delay-spawn-wait/-/delay-spawn-wait-2.0.0.tgz#0070404866c3e18c9e329d6596a39acad4fed0de"
+  integrity sha512-whUOid6oxtn0QTtbim5QLLjJZ63/IGqHkVCh+GF/alRw3qlo1p9SyULuRciwWec7FU42L1NJzUteFoajiCfywA==
+
 "@rbxts/janitor@^1.13.6-ts.0":
   version "1.13.6-ts.0"
   resolved "https://registry.yarnpkg.com/@rbxts/janitor/-/janitor-1.13.6-ts.0.tgz#d2540123f78cc8e7d5349b52c6275a022be99568"

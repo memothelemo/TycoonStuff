@@ -1,6 +1,7 @@
 import { Dependency } from "@flamework/core";
 import Attributes from "@memolemo-studios/rbxts-attributes";
 import { BinderClass } from "@rbxts/binder";
+import { wait } from "@rbxts/delay-spawn-wait";
 import Option, { IOption } from "@rbxts/option";
 import { CollectionService, Players, RunService, ServerStorage } from "@rbxts/services";
 import Signal from "@rbxts/signal";
@@ -49,11 +50,16 @@ let tycoonService: TycoonService;
 
 function doObjectAnimation(model: Model): void {
 	const highlighter = new ModelHighlighter(model, [model.PrimaryPart!]);
-	const spring = new Spring<number>(0);
-	const baseCFrame = model.PrimaryPart!.CFrame;
-	spring.SetDamper(0.4).SetSpeed(13.4).SetClock(os.clock).SetTarget(1);
+	highlighter.setTransparency(1);
+
+	wait(0.2);
 
 	new Promise<void>(resolve => {
+		const spring = new Spring<number>(0);
+		const baseCFrame = model.PrimaryPart!.CFrame;
+
+		spring.SetDamper(0.4).SetSpeed(13.4).SetTarget(1);
+
 		let timer = 0;
 		let connection: RBXScriptConnection;
 		let isResolved = false;
@@ -65,12 +71,15 @@ function doObjectAnimation(model: Model): void {
 			}
 
 			timer += dt;
+
+			print(timer);
+
 			if (timer >= TARGET_ANIMATION_TIME) {
 				isResolved = true;
 				model.SetPrimaryPartCFrame(baseCFrame);
 				connection.Disconnect();
 				highlighter.reset();
-				resolve();
+				return resolve();
 			}
 
 			const position = spring.GetPosition();
