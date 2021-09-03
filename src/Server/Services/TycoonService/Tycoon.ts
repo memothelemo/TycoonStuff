@@ -237,11 +237,6 @@ export class Tycoon implements BinderClass {
 
 			if (!model.IsA("Model")) continue;
 
-			// require PrimaryPart
-			if (!model.PrimaryPart) {
-				continue;
-			}
-
 			if (CollectionService.HasTag(model, "Unlockable")) {
 				this.lockComponent(model);
 			} else {

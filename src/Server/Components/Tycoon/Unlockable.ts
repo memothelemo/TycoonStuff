@@ -50,6 +50,7 @@ class Unlockable implements TycoonServerBaseComponent {
 	public constructor(public instance: Model, public tycoon: Tycoon) {
 		// validating model tree
 		assert(validateUnlockableModel(instance), "Be sure to have a button on it!");
+		assert(instance.PrimaryPart, `${instance.GetFullName()} has no PrimaryPart!`);
 
 		this._attributes = new Attributes(this.instance);
 
