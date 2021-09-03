@@ -2,7 +2,7 @@ import { OnInit, Service } from "@flamework/core";
 import Option, { IOption } from "@rbxts/option";
 import { GetProfileStore } from "@rbxts/profileservice";
 import { Profile } from "@rbxts/profileservice/globals";
-import { Players } from "@rbxts/services";
+import { Players, RunService } from "@rbxts/services";
 import Signal from "@rbxts/signal";
 
 interface Leaderstats extends Folder {
@@ -14,9 +14,14 @@ export interface PlayerData {
 }
 
 const Profiles = new Map<Player, Profile<PlayerData>>();
-const ProfileStore = GetProfileStore<PlayerData>("PlayerData", {
+let ProfileStore = GetProfileStore<PlayerData>("PlayerData", {
 	cash: 0,
 });
+
+// if it is in Studio, but we can use Mock version of it
+if (RunService.IsStudio()) {
+	ProfileStore = ProfileStore.Mock;
+}
 
 @Service({
 	// this guy will load first
