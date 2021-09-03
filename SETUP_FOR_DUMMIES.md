@@ -4,7 +4,7 @@
 This guide is designed for people who do not understand what I mean and for dummies
 
 ## Getting Started
-First, we'll need to setup the build of the game
+First, we'll need to setup the build the game
 
 **These are programs you'll need to install:**
 - [Git](https://git-scm.com)
