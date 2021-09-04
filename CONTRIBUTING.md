@@ -62,7 +62,7 @@ npm run build-game
 ## Unit Testing
 This game repository provides automated unit tests for util modules (inside `src/Shared/Specs`)
 
-You can run the testing process if you have Roblox Studio and Foreman installed. (Only works on Windows and MacOs):
+You can run the testing process if you have Roblox Studio and Foreman installed. (Only works on Windows and MacOS):
 
 1. Run this line below here:
 ```bash
