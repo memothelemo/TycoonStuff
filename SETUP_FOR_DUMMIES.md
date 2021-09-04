@@ -3,14 +3,14 @@
 ## Info
 This guide is designed for people who do not understand what I mean and for dummies
 
+_For MacOS users, unfortunately I cannot give you an installation guide because I don't have a Mac..._
+
 ## Getting Started
 First, we'll need to setup the build the game
 
 **These are programs you'll need to install:**
 - [Git](https://git-scm.com)
 - [Node.js](https://nodejs.org)
-
-_For MacOS users, I don't know how to install it. :D_
 
 **Installation guide:**
 
@@ -34,7 +34,7 @@ _For MacOS users, I don't know how to install it. :D_
 
 		- [run-in-roblox](https://github.com/rojo-rbx/run-in-roblox/releases/tag/v0.3.0)
 
-	- If you're MacOS or Linux user, please follow the instructions in their home page.
+	- If you're Linux user, please follow the instructions in their home page.
 
 	**LINUX USERS ONLY:**
 
@@ -43,7 +43,7 @@ _For MacOS users, I don't know how to install it. :D_
 	rojo --help
 	```
 
-	- If it goes wrong, skip to Step 7 and return to Step 5, once it's done
+	- If it goes wrong, skip to Step 7 and return to Step 5 after
 
 5. Open the terminal program:
 
@@ -51,7 +51,7 @@ _For MacOS users, I don't know how to install it. :D_
 
 	- Hold `Shift` on your keyboard and right click inside the surroundings of the File Explorer (Make sure you have not selected anything).
 
-		If you're in Windows 11, click Show more options once you see it.
+		If you're in Windows 11, you should see `Show more options` and click it.
 
 	- Click `Open PowerShell window here` or `Open in Windows Terminal` (both options are fine)
 	<div align="center">
@@ -87,9 +87,11 @@ _For MacOS users, I don't know how to install it. :D_
 	<img src="https://i.imgur.com/u2L54KD.png" width="400">
 	</div>
 
-7. **Linux users only (THIS IS NOT TESTED YET, TRY AT YOUR OWN RISK)**:
+7. **Diagnostics for Linux users from Step 6**:
 
-	If you've got an error, maybe because bash isn't recognized roblox-ts as an executable program.
+	_THIS IS ONLY FOR LINUX USERS, IF YOU'RE IN WINDOWS, PLEASE SKIP TO STEP 8_
+
+	If you've got an error, maybe because bash isn't recognized roblox-ts as an global binary executable.
 
 	- To solve this issue, we need to copy this line below, paste it into the terminal window and press `Enter` on your keyboard:
 
@@ -101,18 +103,21 @@ _For MacOS users, I don't know how to install it. :D_
 
 	- Press `Enter` key on your keyboard to give some extra line
 
-	- Copy this line below, paste by pressing `Ctrl+Shift+V" on your keyboard in the terminal window (Be sure to replace YOUR_USERNAME with your username):
+	- Copy this line below, paste by pressing `Ctrl+Shift+V" on your keyboard in the terminal window (Be sure to replace YOUR_USERNAME with your Linux username):
 
 
 	```
 	export PATH=$PATH:/home/YOUR_USERNAME/.npmrc:/home/YOUR_USERNAME/.foreman/bin:/home/YOUR_USERNAME/.cargo/bin
 	```
 
-	- Close and open the terminal (same process as Step 5)
+	- Close the terminal (to reload the configurations we have in the last step)
+
+	- Open the terminal (same process as Step 5)
 
 	- Try again in Step 6 or 5.
 
 8. Compile the game:
+
 	- Copy this line below, paste it to the terminal window and press `Enter` on your keyboard:
 
 	```bash
@@ -123,7 +128,11 @@ _For MacOS users, I don't know how to install it. :D_
 
 	- Otherwise, please contact with me on Discord (memothelemo#1850) so that I can fix your issue
 
-## FAQ
+## FAQ (for dummies)
+
+**How do I setup your game?**
+
+Coming soon! heheheheh
 
 **Why does your code looks messy inside ROBLOX Studio?:**
 
@@ -137,7 +146,7 @@ I know, I know, I know!
 
 TypeScript allows me to never run into errors caused by typos, invalid values or passing the wrong type of the value.
 
-If I were using Lua instead, I have to spend couple hours (where, why, what, and how it did happened)
+If I were using Lua instead, I have to spend couple hours (where, why, what, and how it did happened to a particular error)
 
 **Why do I need to install these programs mentioned in the installation guide?**
 
