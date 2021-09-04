@@ -5,6 +5,7 @@ interface CacheInfo {
 	transparency: number;
 	canCollide: boolean;
 	color: Color3;
+	castShadow: boolean;
 }
 
 const partTypecheck = t.instanceIsA("Part");
@@ -37,8 +38,13 @@ export class ModelHighlighter {
 					transparency: child.Transparency,
 					color: child.Color,
 					canCollide: child.CanCollide,
+					castShadow: child.CastShadow,
 				}),
 			);
+	}
+
+	public setCastShadow(shadow: boolean): void {
+		this._cache.forEach((_, part) => (part.CastShadow = shadow));
 	}
 
 	public setCanCollide(canCollide: boolean): void {
