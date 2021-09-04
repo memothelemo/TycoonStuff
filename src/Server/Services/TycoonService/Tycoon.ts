@@ -226,7 +226,7 @@ export class Tycoon implements BinderClass {
 
 				this.objectUnlocked.Fire(instance.Name);
 
-				// fancy animsations
+				// fancy animations
 				unlockable.setButtonVisibility(false, false);
 				doObjectAnimation(instance);
 
