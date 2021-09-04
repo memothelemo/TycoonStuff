@@ -68,6 +68,7 @@ export class ModelHighlighter {
 			part.Color = info.color;
 			part.Transparency = info.transparency;
 			part.CanCollide = info.canCollide;
+			part.CastShadow = info.castShadow;
 		});
 	}
 }
