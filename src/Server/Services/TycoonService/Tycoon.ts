@@ -11,7 +11,6 @@ import { $instance } from "rbxts-transformer-fs";
 import type Unlockable from "Server/Components/Tycoon/Unlockable";
 import { OBJECT_SPAWN_ANIMATION_TIME } from "Server/Constants/animation";
 import { ModelHighlighter } from "Shared/Classes/ModelHighlighter";
-import { findFirstDescendant } from "Shared/Util/findFirstDescendant";
 import { lerpNumber } from "Shared/Util/lerpNumber";
 
 import Spring from "../../../../rbxlua/Spring";
@@ -269,7 +268,7 @@ export class Tycoon implements BinderClass {
 	private _createComponent(instance: Model, tag: string): TycoonServerBaseComponent;
 	private _createComponent(instance: Model, tag: string): TycoonServerBaseComponent {
 		// find that component script
-		const module = findFirstDescendant(moduleStorage, tag);
+		const module = moduleStorage.FindFirstChild(tag, true);
 
 		// validating component module
 		if (module === undefined || !module.IsA("ModuleScript")) {
