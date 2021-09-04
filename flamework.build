@@ -22,6 +22,9 @@
 		"tycoonstuff:out/Server/Components/Tycoon/Unlockable/init@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/Unlockable/init@Unlockable",
 		"tycoonstuff:out/Server/Components/Tycoon/init@Unlockable": "tycoonstuff:out/Server/Components/Tycoon/init@Unlockable",
 		"tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboard": "tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboard",
-		"tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboardUI": "tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboardUI"
+		"tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboardUI": "tycoonstuff:out/Server/Services/TycoonService/ButtonBillboard@ButtonBillboardUI",
+		"tycoonstuff:out/Server/Components/Tycoon/Upgraders/Upgrader@Upgrader": "tycoonstuff:out/Server/Components/Tycoon/Upgraders/Upgrader@Upgrader",
+		"tycoonstuff:out/Server/Components/Tycoon/Upgraders/BaseUpgrader@Upgrader": "tycoonstuff:out/Server/Components/Tycoon/Upgraders/BaseUpgrader@Upgrader",
+		"tycoonstuff:out/Server/Components/Tycoon/Upgraders/BaseUpgrader@BaseUpgrader": "tycoonstuff:out/Server/Components/Tycoon/Upgraders/BaseUpgrader@BaseUpgrader"
 	}
 }

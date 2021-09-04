@@ -1,6 +1,5 @@
 import Attributes from "@memolemo-studios/rbxts-attributes";
 import { Janitor } from "@rbxts/janitor";
-import { RunService } from "@rbxts/services";
 import type { Tycoon } from "Server/Services/TycoonService/Tycoon";
 
 import type { TycoonServerBaseComponent } from "../../../../../typings/tycoon";
@@ -11,13 +10,6 @@ interface ConveyorAttributes {
 
 interface ConveyorModel extends Model {
 	Movers: Model;
-}
-
-function createAttachmentFromVector(vector: Vector3): Attachment {
-	const attachment = new Instance("Attachment");
-	attachment.Position = vector;
-
-	return attachment;
 }
 
 /** @hidden */
@@ -43,10 +35,9 @@ class BaseConveyor implements TycoonServerBaseComponent {
 	public init(): void {
 		const speed = this._attributes.get("Speed");
 
-		// This is how you make a conveyor with modern ROBLOX features
 		for (const conveyor of this._realInstance.Movers.GetChildren()) {
-			if (conveyor.IsA("Part")) {
-				conveyor.AssemblyLinearVelocity = new Vector3(0, 0, -speed);
+			if (conveyor.IsA("BasePart")) {
+				conveyor.AssemblyLinearVelocity = conveyor.CFrame.LookVector.mul(speed);
 			}
 		}
 	}
