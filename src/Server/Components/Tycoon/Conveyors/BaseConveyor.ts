@@ -34,7 +34,7 @@ class BaseConveyor implements TycoonServerBaseComponent {
 
 	public init(): void {
 		const speed = this._attributes.get("Speed");
-		const speedVector = new Vector3(0, 0, -speed);
+		const speedVector = new Vector3(0, 0, speed);
 
 		for (const conveyor of this._realInstance.Movers.GetChildren()) {
 			if (conveyor.IsA("Part")) {
