@@ -68,8 +68,12 @@ class BaseUpgrader implements TycoonServerBaseComponent {
 		guidValue.Parent = hit;
 
 		// increase ore's worth
-		hit.Worth.Value *= this._multipler;
-		hit.Worth.Value += this._adder;
+		let newWorthValue = hit.Worth.Value;
+		newWorthValue *= this._multipler;
+		newWorthValue += this._adder;
+
+		// prevent any decimals from coming through
+		hit.Worth.Value = math.floor(newWorthValue);
 	}
 
 	private _listenUpgraderPart(part: BasePart): void {
