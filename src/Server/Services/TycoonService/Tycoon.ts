@@ -242,12 +242,12 @@ export class Tycoon implements BinderClass {
 
 	public lockAll(): void {
 		for (const model of this.Instance.Components.GetDescendants()) {
+			if (!model.IsA("Model")) continue;
+
 			// same names do not work together
 			if (this._components.has(model.Name)) {
 				error(`Attempting to override existing component: ${model.Name}`);
 			}
-
-			if (!model.IsA("Model")) continue;
 
 			if (CollectionService.HasTag(model, "Unlockable")) {
 				this.lockComponent(model);
