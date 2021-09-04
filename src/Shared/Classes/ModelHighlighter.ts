@@ -8,7 +8,7 @@ interface CacheInfo {
 	castShadow: boolean;
 }
 
-const partTypecheck = t.instanceIsA("Part");
+const partTypecheck = t.instanceIsA("BasePart");
 
 export class ModelHighlighter {
 	private _cache = new Map<BasePart, CacheInfo>();
@@ -17,8 +17,8 @@ export class ModelHighlighter {
 		// ignoredParts checking
 		ignoredParts.forEach((part, i) => {
 			if (!partTypecheck(part))
-				throw `Bad index #${i}: expected Instance and Part className, got ${
-					typeIs(part, "Instance") ? part.ClassName : typeOf(part)
+				throw `Bad index #${i}: expected Instance and BasePart got ${
+					typeIs(part, "Instance") ? `wrong class` : typeOf(part)
 				}`;
 
 			if (!part.IsDescendantOf(model))
