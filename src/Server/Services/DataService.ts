@@ -74,19 +74,6 @@ export class DataService implements OnInit {
 		return Option.Wrap(player.FindFirstChild("leaderstats") as Leaderstats);
 	}
 
-	public updateLeaderstats(player: Player): void {
-		this.getFromPlayer(player).Match({
-			Some: profile =>
-				this.getLeaderstats(player).Match({
-					Some: leaderstats => {
-						leaderstats.Cash.Value = profile.Data.cash;
-					},
-					None: () => {},
-				}),
-			None: () => {},
-		});
-	}
-
 	private _createLeaderstatsBoilerplate(player: Player, profile: Profile<PlayerData>): Leaderstats {
 		const leaderstats = new Instance("Folder") as Leaderstats;
 		leaderstats.Name = "leaderstats";

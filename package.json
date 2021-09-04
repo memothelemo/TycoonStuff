@@ -6,7 +6,6 @@
   "scripts": {
     "build": "rbxtsc",
     "build-game": "npm run build && rojo build -o ./game.rbxlx",
-    "lines-of-code": "node scripts/countLinesOfCode.js",
     "lint": "npx eslint src --max-warnings 0",
     "lint-fix": "npx eslint src --fix",
     "watch": "rbxtsc -w",

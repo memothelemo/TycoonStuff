@@ -53,7 +53,7 @@ class BaseDropper implements TycoonServerBaseComponent {
 		assert(success, message);
 	}
 
-	private _spawnOreFromDropPart(dropPart: BasePart): void {
+	private _spawnOreFromDropPart(dropPart: Part): void {
 		// get the spawn point below the drop part
 		const spawnCFrame = dropPart.CFrame.ToWorldSpace(new CFrame(0, -(dropPart.Size.Y / 2 - ORE_SIZE.Y), 0));
 		const currentWorth = this._attributes.get("Worth");
@@ -67,9 +67,7 @@ class BaseDropper implements TycoonServerBaseComponent {
 
 	public init(): void {
 		const secondsPerRate = this._attributes.get("Rate");
-		const drops = this._realInstance.Drops.GetChildren().filter((child): child is BasePart =>
-			child.IsA("BasePart"),
-		);
+		const drops = this._realInstance.Drops.GetChildren().filter((child): child is Part => child.IsA("Part"));
 		let timer = 0;
 
 		const onHeartbeat = (dt: number): void => {
@@ -79,7 +77,7 @@ class BaseDropper implements TycoonServerBaseComponent {
 
 				// drop every drop part
 				for (const drop of drops) {
-					task.spawn((part: BasePart) => this._spawnOreFromDropPart(part), drop);
+					task.spawn((part: Part) => this._spawnOreFromDropPart(part), drop);
 				}
 			}
 		};

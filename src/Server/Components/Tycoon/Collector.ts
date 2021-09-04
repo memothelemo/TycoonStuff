@@ -30,7 +30,7 @@ const validateCollectorModel = (instance: Instance): instance is CollectorModel 
 				Amount: "TextLabel",
 			},
 		},
-		Giver: "BasePart",
+		Giver: "Part",
 	});
 
 /** @hidden */

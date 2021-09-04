@@ -5,10 +5,9 @@ interface CacheInfo {
 	transparency: number;
 	canCollide: boolean;
 	color: Color3;
-	castShadow: boolean;
 }
 
-const partTypecheck = t.instanceIsA("BasePart");
+const partTypecheck = t.instanceIsA("Part");
 
 export class ModelHighlighter {
 	private _cache = new Map<BasePart, CacheInfo>();
@@ -17,8 +16,8 @@ export class ModelHighlighter {
 		// ignoredParts checking
 		ignoredParts.forEach((part, i) => {
 			if (!partTypecheck(part))
-				throw `Bad index #${i}: expected Instance and BasePart got ${
-					typeIs(part, "Instance") ? `wrong class` : typeOf(part)
+				throw `Bad index #${i}: expected Instance and Part className, got ${
+					typeIs(part, "Instance") ? part.ClassName : typeOf(part)
 				}`;
 
 			if (!part.IsDescendantOf(model))
@@ -38,13 +37,8 @@ export class ModelHighlighter {
 					transparency: child.Transparency,
 					color: child.Color,
 					canCollide: child.CanCollide,
-					castShadow: child.CastShadow,
 				}),
 			);
-	}
-
-	public setCastShadow(shadow: boolean): void {
-		this._cache.forEach((_, part) => (part.CastShadow = shadow));
 	}
 
 	public setCanCollide(canCollide: boolean): void {
@@ -68,7 +62,6 @@ export class ModelHighlighter {
 			part.Color = info.color;
 			part.Transparency = info.transparency;
 			part.CanCollide = info.canCollide;
-			part.CastShadow = info.castShadow;
 		});
 	}
 }

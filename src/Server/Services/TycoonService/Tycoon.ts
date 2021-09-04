@@ -52,7 +52,6 @@ function doObjectAnimation(model: Model): void {
 	const highlighter = new ModelHighlighter(model, [model.PrimaryPart!]);
 	highlighter.setTransparency(1);
 	highlighter.setCanCollide(false);
-	highlighter.setCastShadow(false);
 
 	wait(0.2);
 
@@ -225,12 +224,11 @@ export class Tycoon implements BinderClass {
 
 				instance.Parent = this.Instance.Components;
 
-				this.objectUnlocked.Fire(instance.Name);
-
-				// fancy animations
+				// fancy animsations
 				unlockable.setButtonVisibility(false, false);
 				doObjectAnimation(instance);
 
+				this.objectUnlocked.Fire(instance.Name);
 				this.addComponents(instance);
 				unlockable.onSpawn();
 			})
@@ -242,12 +240,12 @@ export class Tycoon implements BinderClass {
 
 	public lockAll(): void {
 		for (const model of this.Instance.Components.GetDescendants()) {
-			if (!model.IsA("Model")) continue;
-
 			// same names do not work together
 			if (this._components.has(model.Name)) {
 				error(`Attempting to override existing component: ${model.Name}`);
 			}
+
+			if (!model.IsA("Model")) continue;
 
 			if (CollectionService.HasTag(model, "Unlockable")) {
 				this.lockComponent(model);

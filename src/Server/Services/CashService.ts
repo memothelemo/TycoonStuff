@@ -8,7 +8,7 @@ let DataService: DataServiceType;
 @Service({})
 export class CashService implements OnStart {
 	public spendFromPlayer(player: Player, price: number): Promise<void> {
-		return new Promise<void>((resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			DataService.getFromPlayer(player).Match({
 				Some: profile => {
 					const cash = profile.Data.cash;
@@ -23,7 +23,7 @@ export class CashService implements OnStart {
 				},
 				None: () => reject(`${player.Name}'s cash is not loaded`),
 			});
-		}).then(() => DataService.updateLeaderstats(player));
+		});
 	}
 
 	public setFromPlayer(player: Player, setter: (oldValue: number) => number): Promise<void> {
