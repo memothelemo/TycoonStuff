@@ -68,5 +68,5 @@ You can run the testing process if you have Roblox Studio and Foreman installed.
 
 1. Run this line below here:
 ```bash
-npm run test
+npm test
 ```
