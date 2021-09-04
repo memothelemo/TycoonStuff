@@ -37,7 +37,7 @@ class BaseConveyor implements TycoonServerBaseComponent {
 		const speedVector = new Vector3(0, 0, speed);
 
 		for (const conveyor of this._realInstance.Movers.GetChildren()) {
-			if (conveyor.IsA("Part")) {
+			if (conveyor.IsA("BasePart")) {
 				conveyor.AssemblyLinearVelocity = conveyor.CFrame.LookVector.mul(speedVector);
 			}
 		}

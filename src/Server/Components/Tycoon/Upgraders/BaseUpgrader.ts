@@ -72,7 +72,7 @@ class BaseUpgrader implements TycoonServerBaseComponent {
 		hit.Worth.Value += this._adder;
 	}
 
-	private _listenUpgraderPart(part: Part): void {
+	private _listenUpgraderPart(part: BasePart): void {
 		// I do not know if guid will have the same id as other upgraders
 		// if it is, then that will be a great disaster!
 		const guid = HttpService.GenerateGUID();
@@ -83,7 +83,7 @@ class BaseUpgrader implements TycoonServerBaseComponent {
 		// iterating each upgraders
 		// whilst generate their own ids (to prevent from upgrading too much until any ore's worth is around an infinity)
 		for (const upgrader of this._realInstance.Upgraders.GetChildren()) {
-			if (upgrader.IsA("Part")) {
+			if (upgrader.IsA("BasePart")) {
 				this._listenUpgraderPart(upgrader);
 			}
 		}

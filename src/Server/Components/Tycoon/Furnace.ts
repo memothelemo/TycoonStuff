@@ -17,7 +17,7 @@ const validateFurnaceModel = (instance: Instance): instance is FurnaceModel =>
 		$className: "Model",
 		Furnace: {
 			$className: "Model",
-			Lava: "Part",
+			Lava: "BasePart",
 		},
 	});
 
