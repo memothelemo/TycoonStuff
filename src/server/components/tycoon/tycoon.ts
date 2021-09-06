@@ -3,6 +3,7 @@ import Attributes from "@memolemo-studios/rbxts-attributes";
 import { BinderClass } from "@rbxts/binder";
 import Option from "@rbxts/option";
 import { CollectionService, Players, ServerStorage } from "@rbxts/services";
+import Signal from "@rbxts/signal";
 import { $instance } from "rbxts-transformer-fs";
 import { TycoonService as TycoonServiceType } from "server/services/TycoonService";
 import { checkTycoonBaseComponentClass, ServerBaseTycoonComponent } from "server/typings";
@@ -29,6 +30,14 @@ function reloadServices() {
 	areServicesLoaded = true;
 }
 
+function isUnlockableComponent(component: ServerBaseTycoonComponent): component is Unlockable {
+	// cheat way if it is unlockable
+	if ("unlockable_symbol" in component) {
+		return true;
+	}
+	return false;
+}
+
 function assertTycoonModel(object: Instance): asserts object is TycoonModel {
 	if (!TycoonModel(object)) {
 		throwInvalidStructureMsg(object, "Tycoon");
@@ -37,7 +46,9 @@ function assertTycoonModel(object: Instance): asserts object is TycoonModel {
 
 export default class ServerTycoon implements BinderClass {
 	private attributes: Attributes<TycoonAttributes>;
+	private components = new Array<ServerBaseTycoonComponent>();
 
+	onUnlockedComponent = new Signal<(componentName: string) => void>();
 	instance: TycoonModel;
 
 	// binder requires exact parameters like this
@@ -47,6 +58,11 @@ export default class ServerTycoon implements BinderClass {
 
 		this.instance = instance;
 		this.attributes = new Attributes(instance);
+	}
+
+	// tycoon methods
+	init() {
+		this.lockAll();
 	}
 
 	// component methods
@@ -76,10 +92,12 @@ export default class ServerTycoon implements BinderClass {
 		const component = new componentClass(instance, this);
 		component.init();
 
+		this.components.push(component);
+
 		return component;
 	}
 
-	private lockComponent(instance: Model) {
+	private lockComponent(instance: Instance) {
 		// we don't want to relock it obviously
 		if (instance.IsDescendantOf(componentSafe)) {
 			return;
@@ -92,14 +110,26 @@ export default class ServerTycoon implements BinderClass {
 	}
 
 	private lockAll() {
-		for (const model of this.instance.Components.GetDescendants()) {
-			if (!model.IsA("Model")) continue;
-			if (CollectionService.HasTag(model, UNLOCKABLE_TAG)) {
-				this.lockComponent(model);
+		for (const descendant of this.instance.Components.GetDescendants()) {
+			if (CollectionService.HasTag(descendant, UNLOCKABLE_TAG)) {
+				this.lockComponent(descendant);
 			} else {
-				this.addComponents(model);
+				this.addComponents(descendant);
 			}
 		}
+	}
+
+	getUnlockableFromName(name: string): Unlockable {
+		const filtered = this.components
+			.filter((component): component is Unlockable => isUnlockableComponent(component))
+			.filter(unlockable => unlockable.instance.Name === name);
+
+		if (filtered.size() > 1) {
+			error(`Duplicated unlockable component: ${name}`);
+		}
+
+		assert(filtered[0], `${name} is not registered as Unlockable!`);
+		return filtered[0];
 	}
 
 	unlock(unlockable: Unlockable): Promise<void> {
@@ -114,7 +144,7 @@ export default class ServerTycoon implements BinderClass {
 			CollectionService.RemoveTag(instance, UNLOCKABLE_TAG);
 
 			instance.Parent = this.instance.Components;
-			unlockable.setButtonVisbility(false);
+			this.onUnlockedComponent.Fire(instance.Name);
 
 			resolve();
 		});
@@ -134,11 +164,11 @@ export default class ServerTycoon implements BinderClass {
 		});
 	}
 
-	public getOwner() {
+	getOwner() {
 		return Option.Wrap(Players.GetPlayerByUserId(this.attributes.getOr("Owner", -100))!);
 	}
 
-	public assignOwner(player: Player): Promise<void> {
+	assignOwner(player: Player): Promise<void> {
 		if (this.attributes.has("Owner")) {
 			return Promise.reject(`This tycoon is already owned by someone!`) as Promise<void>;
 		}
@@ -163,7 +193,7 @@ export default class ServerTycoon implements BinderClass {
 		});
 	}
 
-	public hasOwner() {
+	hasOwner() {
 		return this.attributes.has("Owner");
 	}
 

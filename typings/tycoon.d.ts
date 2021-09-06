@@ -16,7 +16,3 @@ interface TycoonAttributes {
 	 */
 	ComponentId: string;
 }
-
-interface UnlockableModel extends Model {
-	Button: Part;
-}
