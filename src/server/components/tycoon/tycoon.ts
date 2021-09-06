@@ -38,9 +38,6 @@ export default class ServerTycoon implements BinderClass {
 
 		this.instance = instance;
 		this.attributes = new Attributes(instance);
-
-		// reload services
-		reloadServices();
 	}
 
 	// owner methods
@@ -62,6 +59,9 @@ export default class ServerTycoon implements BinderClass {
 			return Promise.reject(`This tycoon is already owned by someone!`) as Promise<void>;
 		}
 		return new Promise((resolve, reject) => {
+			// reload services
+			reloadServices();
+
 			// making sure player hasn't left the game
 			if (!player.IsDescendantOf(Players)) {
 				return reject(`${player.Name} had left the game`);
