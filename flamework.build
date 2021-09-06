@@ -7,6 +7,11 @@
 		"tycoonstuff:out/client/controllers/TycoonController@TycoonController": "tycoonstuff:out/client/controllers/TycoonController@TycoonController",
 		"tycoonstuff:out/server/components/tycoon/unlockable@Unlockable": "tycoonstuff:out/server/components/tycoon/unlockable@Unlockable",
 		"tycoonstuff:out/server/components/tycoon/objects/Unlockable@Unlockable": "tycoonstuff:out/server/components/tycoon/objects/Unlockable@Unlockable",
-		"tycoonstuff:out/server/components/tycoon/objects/Button@Button": "tycoonstuff:out/server/components/tycoon/objects/Button@Button"
+		"tycoonstuff:out/server/components/tycoon/objects/Button@Button": "tycoonstuff:out/server/components/tycoon/objects/Button@Button",
+		"tycoonstuff:out/server/components/tycoon/objects/Furnace@Furnace": "tycoonstuff:out/server/components/tycoon/objects/Furnace@Furnace",
+		"tycoonstuff:out/server/components/tycoon/objects/Conveyors/BaseConveyor@BaseConveyor": "tycoonstuff:out/server/components/tycoon/objects/Conveyors/BaseConveyor@BaseConveyor",
+		"tycoonstuff:out/server/components/tycoon/objects/Upgraders/BaseUpgrader@BaseUpgrader": "tycoonstuff:out/server/components/tycoon/objects/Upgraders/BaseUpgrader@BaseUpgrader",
+		"tycoonstuff:out/server/components/tycoon/objects/Collector@Collector": "tycoonstuff:out/server/components/tycoon/objects/Collector@Collector",
+		"tycoonstuff:out/server/components/tycoon/objects/Cube@Cube": "tycoonstuff:out/server/components/tycoon/objects/Cube@Cube"
 	}
 }
