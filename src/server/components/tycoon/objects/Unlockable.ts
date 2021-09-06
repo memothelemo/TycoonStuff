@@ -1,4 +1,5 @@
 import Attributes from "@memolemo-studios/rbxts-attributes";
+import { Janitor } from "@rbxts/janitor";
 import { ServerBaseTycoonComponent } from "server/typings";
 
 import { throwInvalidStructureMsg } from "../shared";
@@ -21,6 +22,7 @@ function assertUnlockableModel(instance: Instance): asserts instance is Model {
 }
 
 class Unlockable implements ServerBaseTycoonComponent<Model> {
+	private janitor = new Janitor();
 	private attributes: Attributes<UnlockableAttributes>;
 
 	readonly unlockable_symbol = ":D";
@@ -37,19 +39,26 @@ class Unlockable implements ServerBaseTycoonComponent<Model> {
 		});
 
 		this.attributes.expectType("DisplayName", "string");
+		this.janitor.Add(this.attributes);
 	}
 
 	isSpawned() {
 		return this.instance.Parent !== this.tycoon.instance.Components;
 	}
 
-	init() {}
+	init() {
+		// noop
+	}
 
 	onSpawn() {
 		this.destroy();
 	}
 
-	destroy() {}
+	destroy() {
+		if (this.janitor["Destroy"] !== undefined) {
+			this.janitor.Destroy();
+		}
+	}
 }
 
 export = Unlockable;

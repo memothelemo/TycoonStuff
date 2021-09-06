@@ -20,6 +20,7 @@ const moduleStorage = $instance<Folder>("src/server/components/tycoon/objects");
 
 let TycoonService: TycoonServiceType;
 let areServicesLoaded = false;
+let totalTycoons = 0;
 
 function reloadServices() {
 	if (areServicesLoaded) {
@@ -56,13 +57,21 @@ export default class ServerTycoon implements BinderClass {
 		// every tycoon must met its required structure tree
 		assertTycoonModel(instance);
 
+		totalTycoons++;
+
 		this.instance = instance;
 		this.attributes = new Attributes(instance);
+		this.attributes.set("ComponentId", `Tycoon${totalTycoons}`);
 	}
 
 	// tycoon methods
 	init() {
+		warn("The tycoon is initialized");
 		this.lockAll();
+	}
+
+	getComponentId() {
+		return this.attributes.get("ComponentId");
 	}
 
 	// component methods

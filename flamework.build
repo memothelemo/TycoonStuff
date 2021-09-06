@@ -5,6 +5,8 @@
 		"tycoonstuff:out/server/components/tycoon/tycoon@ServerTycoon": "tycoonstuff:out/server/components/tycoon/tycoon@ServerTycoon",
 		"tycoonstuff:out/server/services/TycoonService@TycoonService": "tycoonstuff:out/server/services/TycoonService@TycoonService",
 		"tycoonstuff:out/client/controllers/TycoonController@TycoonController": "tycoonstuff:out/client/controllers/TycoonController@TycoonController",
-		"tycoonstuff:out/server/components/tycoon/unlockable@Unlockable": "tycoonstuff:out/server/components/tycoon/unlockable@Unlockable"
+		"tycoonstuff:out/server/components/tycoon/unlockable@Unlockable": "tycoonstuff:out/server/components/tycoon/unlockable@Unlockable",
+		"tycoonstuff:out/server/components/tycoon/objects/Unlockable@Unlockable": "tycoonstuff:out/server/components/tycoon/objects/Unlockable@Unlockable",
+		"tycoonstuff:out/server/components/tycoon/objects/Button@Button": "tycoonstuff:out/server/components/tycoon/objects/Button@Button"
 	}
 }

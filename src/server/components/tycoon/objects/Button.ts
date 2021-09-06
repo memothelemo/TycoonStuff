@@ -36,6 +36,12 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 	}
 
 	private onButtonTouched(player: Player) {
+		// reload unlockable target
+		if (!this.unlockableTarget) {
+			const target = this.attributes.get("Target");
+			this.unlockableTarget = this.tryGetUnlockable(target, "Target");
+		}
+
 		if (this.tycoon.getOwner().Contains(player)) {
 			this.setButtonVisibility(false);
 			this.tycoon.unlock(this.unlockableTarget);
@@ -65,8 +71,13 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 		const result = this.updateButton();
 		if (result) return;
 
-		const dependencyName = this.dependencyUnlockable.instance.Name;
+		const dependency = this.attributes.get("Dependency");
 		const connection = this.tycoon.onUnlockedComponent.Connect(spawned => {
+			if (this.dependencyUnlockable === undefined) {
+				this.dependencyUnlockable = this.tryGetUnlockable(dependency, "Dependency");
+			}
+
+			const dependencyName = this.dependencyUnlockable.instance.Name;
 			if (dependencyName === spawned) {
 				this.updateButton();
 				connection.Disconnect();
@@ -89,7 +100,7 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 		try {
 			return this.tycoon.getUnlockableFromName(name);
 		} catch {
-			throw `Invalid '${typeImport}' attribute: ${name} (not exists or duplicated name)`;
+			throw `Invalid '${typeImport}' attribute: ${name} (not exists, not registered as Unlockable or duplicated name)`;
 		}
 	}
 
@@ -101,11 +112,7 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 
 	init() {
 		const dependency = this.attributes.get("Dependency");
-		const target = this.attributes.get("Target");
-		this.unlockableTarget = this.tryGetUnlockable(target, "Target");
-
 		if (dependency !== undefined) {
-			this.dependencyUnlockable = this.tryGetUnlockable(dependency, "Dependency");
 			this.listenOnDependency();
 		} else {
 			this.listen();
