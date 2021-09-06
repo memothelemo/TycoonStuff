@@ -49,6 +49,9 @@ export default class ServerTycoon implements BinderClass {
 	private attributes: Attributes<TycoonAttributes>;
 	private components = new Array<ServerBaseTycoonComponent>();
 
+	private collectedCash = 0;
+
+	onCollectedCash = new Signal<(newAmount: number) => void>();
 	onUnlockedComponent = new Signal<(componentName: string) => void>();
 	instance: TycoonModel;
 
@@ -62,6 +65,20 @@ export default class ServerTycoon implements BinderClass {
 		this.instance = instance;
 		this.attributes = new Attributes(instance);
 		this.attributes.set("ComponentId", `Tycoon${totalTycoons}`);
+	}
+
+	// collector
+	collectCollectedCash() {
+		// this is going to be a noop atm
+		return new Promise<void>(resolve => resolve());
+	}
+
+	earnCollectedCash(change: number) {
+		this.onCollectedCash.Fire((this.collectedCash += change));
+	}
+
+	getCollectedCash() {
+		return this.collectedCash;
 	}
 
 	// tycoon methods
