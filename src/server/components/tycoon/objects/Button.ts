@@ -32,6 +32,7 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 			Target: "string",
 		});
 
+		this.janitor.Add(this.instance);
 		this.setButtonVisibility(false);
 	}
 
@@ -44,7 +45,10 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 
 		if (this.tycoon.getOwner().Contains(player)) {
 			this.setButtonVisibility(false);
-			this.tycoon.unlock(this.unlockableTarget);
+			this.tycoon
+				.unlock(this.unlockableTarget)
+				.then(() => this.destroy())
+				.catch(warn);
 		}
 	}
 
@@ -88,7 +92,8 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 	}
 
 	private updateButton() {
-		if (this.canListen()) {
+		const canListen = this.canListen();
+		if (canListen) {
 			this.setButtonVisibility(true);
 			this.listen();
 			return true;

@@ -43,7 +43,7 @@ class Unlockable implements ServerBaseTycoonComponent<Model> {
 	}
 
 	isSpawned() {
-		return this.instance.Parent !== this.tycoon.instance.Components;
+		return this.instance.Parent === this.tycoon.instance.Components;
 	}
 
 	init() {

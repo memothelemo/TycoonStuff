@@ -12,6 +12,7 @@
 		"tycoonstuff:out/server/components/tycoon/objects/Conveyors/BaseConveyor@BaseConveyor": "tycoonstuff:out/server/components/tycoon/objects/Conveyors/BaseConveyor@BaseConveyor",
 		"tycoonstuff:out/server/components/tycoon/objects/Upgraders/BaseUpgrader@BaseUpgrader": "tycoonstuff:out/server/components/tycoon/objects/Upgraders/BaseUpgrader@BaseUpgrader",
 		"tycoonstuff:out/server/components/tycoon/objects/Collector@Collector": "tycoonstuff:out/server/components/tycoon/objects/Collector@Collector",
-		"tycoonstuff:out/server/components/tycoon/objects/Cube@Cube": "tycoonstuff:out/server/components/tycoon/objects/Cube@Cube"
+		"tycoonstuff:out/server/components/tycoon/objects/Cube@Cube": "tycoonstuff:out/server/components/tycoon/objects/Cube@Cube",
+		"tycoonstuff:out/server/components/tycoon/objects/Droppers/BaseDropper@BaseDropper": "tycoonstuff:out/server/components/tycoon/objects/Droppers/BaseDropper@BaseDropper"
 	}
 }
