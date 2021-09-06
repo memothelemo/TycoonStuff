@@ -2,9 +2,10 @@ import Attributes from "@memolemo-studios/rbxts-attributes";
 import { Janitor } from "@rbxts/janitor";
 import { t } from "@rbxts/t";
 import { ServerBaseTycoonComponent } from "server/typings";
+import { detectPlayerTouchesPart } from "shared/util/detectPlayerTouchesPart";
 
-import { throwInvalidStructureMsg } from "./shared";
-import ServerTycoon from "./tycoon";
+import { throwInvalidStructureMsg } from "../shared";
+import ServerTycoon from "../tycoon";
 
 declare global {
 	interface ServerTycoonComponents {
@@ -35,6 +36,7 @@ class Unlockable implements ServerBaseTycoonComponent<UnlockableModel> {
 	private attributes: Attributes<UnlockableAttributes>;
 	private janitor = new Janitor();
 	private button: Part;
+	private debounce = true;
 
 	instance: UnlockableModel;
 
@@ -57,13 +59,23 @@ class Unlockable implements ServerBaseTycoonComponent<UnlockableModel> {
 		});
 	}
 
+	private onButtonTouched(player: Player) {
+		if (this.tycoon.getOwner().Contains(player)) {
+			this.tycoon.unlock(this);
+			this.destroy();
+		}
+	}
+
 	setButtonVisbility(bool: boolean) {
 		const float = bool ? 0 : 1;
 		this.button.Transparency = float;
 		this.button.CanCollide = bool;
 	}
 
-	init() {}
+	init() {
+		this.janitor.Add(this.button);
+		this.janitor.Add(detectPlayerTouchesPart(this.button, player => this.onButtonTouched(player)));
+	}
 
 	onSpawn() {
 		this.destroy();

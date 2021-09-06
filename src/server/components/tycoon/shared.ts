@@ -1,3 +1,5 @@
+export const UNLOCKABLE_TAG = "Unlockable";
+
 export function throwErrorFromInstance(model: Instance, message: string): never {
 	throw `[${model.GetFullName()}]: ${message}`;
 }

@@ -8,7 +8,8 @@ import { TycoonService as TycoonServiceType } from "server/services/TycoonServic
 import { checkTycoonBaseComponentClass, ServerBaseTycoonComponent } from "server/typings";
 import { TycoonModel } from "shared/typeGuards";
 
-import { throwErrorFromInstance, throwInvalidStructureMsg } from "./shared";
+import Unlockable from "./objects/Unlockable";
+import { throwErrorFromInstance, throwInvalidStructureMsg, UNLOCKABLE_TAG } from "./shared";
 
 const componentSafe = new Instance("Folder");
 componentSafe.Name = "TEMP_CONTAINER";
@@ -87,18 +88,36 @@ export default class ServerTycoon implements BinderClass {
 		// save in a secure container
 		instance.Parent = componentSafe;
 
-		this.createComponent(instance, "Unlockable");
+		this.createComponent(instance, UNLOCKABLE_TAG);
 	}
 
 	private lockAll() {
 		for (const model of this.instance.Components.GetDescendants()) {
 			if (!model.IsA("Model")) continue;
-			if (CollectionService.HasTag(model, "Unlockable")) {
+			if (CollectionService.HasTag(model, UNLOCKABLE_TAG)) {
 				this.lockComponent(model);
 			} else {
 				this.addComponents(model);
 			}
 		}
+	}
+
+	unlock(unlockable: Unlockable): Promise<void> {
+		return new Promise((resolve, reject) => {
+			const owner = this.getOwner();
+			if (owner.IsNone()) {
+				return reject(`Owner left the game!`);
+			}
+
+			// spawn that guy
+			const instance = unlockable.instance;
+			CollectionService.RemoveTag(instance, UNLOCKABLE_TAG);
+
+			instance.Parent = this.instance.Components;
+			unlockable.setButtonVisbility(false);
+
+			resolve();
+		});
 	}
 
 	addComponents(instance: Instance) {
