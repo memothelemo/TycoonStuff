@@ -30,8 +30,7 @@
   "dependencies": {
     "@flamework/components": "^1.0.0-beta.3",
     "@flamework/core": "^1.0.0-beta.0",
-    "@memolemo-studios/rbxts-attributes": "^1.1.1",
-    "@rbxts/attributes-validate": "^1.3.0",
+    "@memolemo-studios/rbxts-attributes": "1.2.0",
     "@rbxts/binder": "^1.0.4",
     "@rbxts/delay-spawn-wait": "^2.0.0",
     "@rbxts/janitor": "^1.13.6-ts.0",

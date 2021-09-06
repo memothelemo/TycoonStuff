@@ -73,10 +73,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
-"@memolemo-studios/rbxts-attributes@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@memolemo-studios/rbxts-attributes/-/rbxts-attributes-1.1.1.tgz#b787799a7a8194bb62ff44f7a3e75b8d4574e7c1"
-  integrity sha512-eHk3ZwPZFISRdtVDwNIq0Uw7n6eLsP1S9zX4UxxHrQXVSZdtAeOZOop9i4GuAOv6Ir2UGaE5TfsBWmaEKPf7XA==
+"@memolemo-studios/rbxts-attributes@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@memolemo-studios/rbxts-attributes/-/rbxts-attributes-1.2.0.tgz#04204452748351554dcca31576ed25ce9fd5d80a"
+  integrity sha512-M1/SMHfHMhHMS277h8yKuQ9OtAf0v/zUf6c1HBQG7hPDR1JE1COrN5qKqKaBJs7OWOfEAMroiakTaskiCqBWjw==
   dependencies:
     "@rbxts/janitor" "^1.13.6-ts.0"
 
@@ -105,13 +105,6 @@
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@phenomnomnominal/tstemplate/-/tstemplate-0.1.0.tgz#125b2617fa8cead47433bbf34ba7ef4e30a7c0f2"
   integrity sha512-/v+GIVNFHAz4+nQtgy9e5ZAXK3xj6TbP5s9JTpnFuqkcLB+gB2lJ6x/nsDhkKhzR6o4REuzhsYoWYnXqKC/UnQ==
-
-"@rbxts/attributes-validate@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@rbxts/attributes-validate/-/attributes-validate-1.3.0.tgz#f2f90c18da24c282d2c93e32ddc1389b40babd1d"
-  integrity sha512-q+GPuUqw3QVR5xHLBd1hGqHSOCRt+/El/TCKSLyHd5mwp2HWTsAtep222/D2m0kaXbSA1BfAdGV35VHcaDj05A==
-  dependencies:
-    "@rbxts/t" "^2.1.1"
 
 "@rbxts/binder@^1.0.4":
   version "1.0.4"
@@ -181,7 +174,7 @@
   resolved "https://registry.yarnpkg.com/@rbxts/signal/-/signal-1.0.3.tgz#7663caf4f6350475488c3a1d5bb4cbc67fe6d0f4"
   integrity sha512-faFH5kVkQotZ2YzJhQ7Z12T9YkfV1O6y0V0V/I/RknBVAmefuIM8pSWj2AIEecOR6jSCtg0yZS8gNYKwfoopNA==
 
-"@rbxts/t@^2.1.1", "@rbxts/t@^2.1.3", "@rbxts/t@^2.1.4", "@rbxts/t@^2.1.5":
+"@rbxts/t@^2.1.3", "@rbxts/t@^2.1.4", "@rbxts/t@^2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@rbxts/t/-/t-2.1.5.tgz#583d1feee5ca26dfae85254ebac0514316ed7c3e"
   integrity sha512-eH2faj6wh4IJnZaqLi0jSmbOmnSFndSXJbXNwobrNAKwmdzxvM64sSsHZ5v1R02BQXuZP/zUjKeL7WS2416pxQ==
