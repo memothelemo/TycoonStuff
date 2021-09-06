@@ -18,9 +18,3 @@ interface TycoonAttributes {
 	 */
 	ComponentId: string;
 }
-
-type TycoonModel = t.static<{
-	Components: Folder;
-	Ores: Folder;
-	Spawn: SpawnLocation;
-}>;
