@@ -8,6 +8,9 @@
 *.blend2
 *.blend3
 
+# Built roblox binary files
+game.rbxlx
+
 # Dump files
 *.tsbuildinfo
 
