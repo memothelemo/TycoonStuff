@@ -1,5 +1,6 @@
 import { OnInit, Service } from "@flamework/core";
 import Binder from "@rbxts/binder";
+import Option from "@rbxts/option";
 import ServerTycoon from "server/components/tycoon/tycoon";
 import Remotes from "shared/remotes";
 
@@ -14,7 +15,13 @@ export class TycoonService implements OnInit {
 		return true;
 	}
 
-	getTycoonFromPlayer(player: Player) {}
+	getTycoonFromPlayer(player: Player) {
+		return Option.Wrap(tycoonBinder.GetAll().filter(tycoon => tycoon.getOwner().Contains(player))[0]);
+	}
+
+	hasTycoonFromPlayer(player: Player) {
+		return this.getTycoonFromPlayer(player).IsSome();
+	}
 
 	onInit() {
 		this.requestTycoonMirror.SetCallback(player => {
