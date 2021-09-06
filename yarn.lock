@@ -38,6 +38,16 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@flamework/components@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@flamework/components/-/components-1.0.0-beta.3.tgz#62ee42faeea1b62e1e7da7dd8a8e41c585b386cb"
+  integrity sha512-XBcGMgviQvjG0GfiLR0f47PRvOZNCwCE857Q0Q8TXkwLc+dP9+aZXPWUVqOHcB96A3njPQN0LGfF4wj9vpK57Q==
+  dependencies:
+    "@flamework/core" "^1.0.0-beta.0"
+    "@rbxts/maid" "^1.0.0-ts.1"
+    "@rbxts/services" "^1.1.5"
+    "@rbxts/t" "^2.1.4"
+
 "@flamework/core@^1.0.0-beta.0":
   version "1.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/@flamework/core/-/core-1.0.0-beta.0.tgz#6288cb2e852dbc887d5b876a9e4440eb6d061e88"
@@ -161,7 +171,7 @@
   resolved "https://registry.yarnpkg.com/@rbxts/roact/-/roact-1.4.0-ts.2.tgz#4b8c6067f71638b10fd27f9482204838296dbe7f"
   integrity sha512-JnbezUhKiVs8ID0cjjmYeGdf4N/Uao8BEMqNQSHUjOOKAI1GVBW2txRE3wUD3Svmw2PMtgCUJAa4mLEKutsQiA==
 
-"@rbxts/services@^1.1.4", "@rbxts/services@^1.2.0":
+"@rbxts/services@^1.1.4", "@rbxts/services@^1.1.5", "@rbxts/services@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@rbxts/services/-/services-1.2.0.tgz#5dcc980fc937d5634dab31f8e564f6565d78ea47"
   integrity sha512-GEnAGgRz/oFEfBCjr+UChO7D49c/l+Wgr2OHMkURBKbVAqGg7hVQbEs9PUr+9BuVx/8OlsqZ/cvrUYbwAyd60A==

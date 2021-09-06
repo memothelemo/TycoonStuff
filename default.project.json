@@ -8,7 +8,7 @@
 		"$className": "DataModel",
 		"ServerScriptService": {
 			"$className": "ServerScriptService",
-			"Game": {
+			"game": {
 				"$path": "out/server"
 			}
 		},
@@ -26,10 +26,10 @@
 					"$path": "node_modules/@rbxts"
 				}
 			},
-			"Game": {
+			"game": {
 				"$path": "out/shared"
 			},
-			"LuauLib": {
+			"lualib": {
 				"$path": "lib"
 			}
 		},
@@ -37,7 +37,7 @@
 			"$className": "StarterPlayer",
 			"StarterPlayerScripts": {
 				"$className": "StarterPlayerScripts",
-				"Game": {
+				"game": {
 					"$path": "out/client"
 				}
 			}
