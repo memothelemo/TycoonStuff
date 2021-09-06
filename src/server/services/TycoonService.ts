@@ -43,7 +43,15 @@ export class TycoonService implements OnInit {
 	}
 
 	getTycoonFromPlayer(player: Player) {
-		return Option.Wrap(tycoonBinder.GetAll().filter(tycoon => tycoon.getOwner().Contains(player))[0]);
+		// eslint-disable-next-line prettier/prettier
+		return Option.Wrap(tycoonBinder
+			.GetAll()
+			.filter(tycoon =>
+				tycoon
+					.getOwner()
+					.Contains(player)
+			)[0]
+		);
 	}
 
 	hasTycoonFromPlayer(player: Player) {
