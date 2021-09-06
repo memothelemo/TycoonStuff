@@ -10,6 +10,7 @@
 
 # Built roblox binary files
 game.rbxlx
+game.rbxlx.lock
 
 # Dump files
 *.tsbuildinfo
