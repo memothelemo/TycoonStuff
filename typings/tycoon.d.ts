@@ -1,5 +1,3 @@
-import { t } from "@rbxts/t";
-
 interface TycoonAttributes {
 	/**
 	 * This attribute is assigned when a tycoon is owned
@@ -17,4 +15,8 @@ interface TycoonAttributes {
 	 * **TEMPLATE**: `Tycoon{ID}`
 	 */
 	ComponentId: string;
+}
+
+interface UnlockableModel extends Model {
+	Button: Part;
 }

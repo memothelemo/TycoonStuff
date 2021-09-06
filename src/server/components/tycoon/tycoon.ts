@@ -2,11 +2,19 @@ import { Dependency } from "@flamework/core";
 import Attributes from "@memolemo-studios/rbxts-attributes";
 import { BinderClass } from "@rbxts/binder";
 import Option from "@rbxts/option";
-import { Players } from "@rbxts/services";
+import { CollectionService, Players, ServerStorage } from "@rbxts/services";
+import { $instance } from "rbxts-transformer-fs";
 import { TycoonService as TycoonServiceType } from "server/services/TycoonService";
+import { checkTycoonBaseComponentClass, ServerBaseTycoonComponent } from "server/typings";
 import { TycoonModel } from "shared/typeGuards";
 
-import { TycoonAttributes } from "../../../../typings/tycoon";
+import { throwErrorFromInstance, throwInvalidStructureMsg } from "./shared";
+
+const componentSafe = new Instance("Folder");
+componentSafe.Name = "TEMP_CONTAINER";
+componentSafe.Parent = ServerStorage;
+
+const moduleStorage = $instance<Folder>("src/server/components/tycoon/objects");
 
 let TycoonService: TycoonServiceType;
 let areServicesLoaded = false;
@@ -22,7 +30,7 @@ function reloadServices() {
 
 function assertTycoonModel(object: Instance): asserts object is TycoonModel {
 	if (!TycoonModel(object)) {
-		error(`${object.GetFullName()} has 'Tycoon' tag but don't follow the required structure tree!`);
+		throwInvalidStructureMsg(object, "Tycoon");
 	}
 }
 
@@ -38,6 +46,63 @@ export default class ServerTycoon implements BinderClass {
 
 		this.instance = instance;
 		this.attributes = new Attributes(instance);
+	}
+
+	// component methods
+	private createComponent<T extends keyof ServerTycoonComponents>(
+		instance: Instance,
+		tag: T,
+	): ServerTycoonComponents[T];
+	private createComponent(instance: Instance, tag: string): ServerBaseTycoonComponent;
+	private createComponent(instance: Instance, tag: string): ServerBaseTycoonComponent {
+		// find that component script
+		const module = moduleStorage.FindFirstChild(tag, true);
+
+		// validating component module
+		if (module === undefined || !module.IsA("ModuleScript")) {
+			throwErrorFromInstance(instance, `Invalid or unknown component: ${tag}`);
+		}
+
+		// checking the contents of the module itself
+		const componentClass = require(module);
+
+		// validating base component class
+		if (!checkTycoonBaseComponentClass(componentClass)) {
+			throwErrorFromInstance(instance, `Invalid component module: ${tag}`);
+		}
+
+		// assume it is a component, instantiate it
+		const component = new componentClass(instance, this);
+		component.init();
+
+		return component;
+	}
+
+	private lockComponent(instance: Model) {
+		// we don't want to relock it obviously
+		if (instance.IsDescendantOf(componentSafe)) {
+			return;
+		}
+
+		// save in a secure container
+		instance.Parent = componentSafe;
+
+		this.createComponent(instance, "Unlockable");
+	}
+
+	private lockAll() {
+		for (const model of this.instance.Components.GetDescendants()) {
+			if (!model.IsA("Model")) continue;
+			if (CollectionService.HasTag(model, "Unlockable")) {
+				this.lockComponent(model);
+			} else {
+				this.addComponents(model);
+			}
+		}
+	}
+
+	addComponents(instance: Instance) {
+		CollectionService.GetTags(instance).forEach(tag => this.createComponent(instance, tag));
 	}
 
 	// owner methods
