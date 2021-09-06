@@ -9,7 +9,7 @@
 		"ServerScriptService": {
 			"$className": "ServerScriptService",
 			"Game": {
-				"$path": "out/Server"
+				"$path": "out/server"
 			}
 		},
 		"ReplicatedStorage": {
@@ -27,10 +27,10 @@
 				}
 			},
 			"Game": {
-				"$path": "out/Shared"
+				"$path": "out/shared"
 			},
 			"LuauLib": {
-				"$path": "rbxlua"
+				"$path": "lib"
 			}
 		},
 		"StarterPlayer": {
@@ -38,7 +38,7 @@
 			"StarterPlayerScripts": {
 				"$className": "StarterPlayerScripts",
 				"Game": {
-					"$path": "out/Client"
+					"$path": "out/client"
 				}
 			}
 		},

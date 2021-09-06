@@ -186,6 +186,11 @@
   resolved "https://registry.yarnpkg.com/@rbxts/types/-/types-1.0.521.tgz#d0452e4e5c4355513cb00f44398fba9963d86e13"
   integrity sha512-DfMEOrMaLdRKuIJFeRZ1p+vQ3DmRZlUzK3hiFJ9BIedvlmf4hx/rZ0Vi05MAmpMeBMXuLN4RlwylgrIKl8Tiiw==
 
+"@rbxts/types@^1.0.524":
+  version "1.0.524"
+  resolved "https://registry.yarnpkg.com/@rbxts/types/-/types-1.0.524.tgz#4ee41cd879003631a3176b879cb5acd0bee56eeb"
+  integrity sha512-IRYOthSYZFEJ9b+Zm2Sb+w+sM+/oRyd1Ycy1VUKyKcwNGx76079PcSEPFT3NTef+U5NcUoak/LvK8CAMQdDsRA==
+
 "@rbxts/validate-tree@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@rbxts/validate-tree/-/validate-tree-1.1.1.tgz#c063516f5be51b05d9bc7b17beeb60940c43069c"
@@ -516,10 +521,10 @@ eslint-plugin-prettier@^4.0.0:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-roblox-ts@^0.0.30:
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-roblox-ts/-/eslint-plugin-roblox-ts-0.0.30.tgz#f59343abb6f02b758f088e0f155fb89e2df76311"
-  integrity sha512-mxUZORX2dpWeZat9FU6E+6+Az4EduMnTkw5r208d/el2jNgo64xqlzigIhnqMvV6dxttMiLIMh2oV52uecBKqw==
+eslint-plugin-roblox-ts@^0.0.31:
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-roblox-ts/-/eslint-plugin-roblox-ts-0.0.31.tgz#c241f6ab675c39776c5eae16a60a17753d57f81e"
+  integrity sha512-/n/yl3q1ZLU/dQSfKVX9BPydBQr863NMWLH+Oge2B2lTs31+sxGJfm0PQlPqSaS5seK219Qj4R8JRGX1sJLjCA==
   dependencies:
     "@types/node" "^14.14.32"
     "@typescript-eslint/experimental-utils" "^4.16.1"
