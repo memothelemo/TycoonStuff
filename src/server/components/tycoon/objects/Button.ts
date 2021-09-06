@@ -21,10 +21,7 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 		this.instance = instance;
 		this.attributes = new Attributes(this.instance);
 
-		this.attributes.default({
-			Price: 0,
-			Visible: false,
-		});
+		this.attributes.default({ Price: 0 });
 
 		this.attributes.expectMultiple({
 			Price: "number",

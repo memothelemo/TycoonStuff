@@ -170,6 +170,7 @@ export default class ServerTycoon implements BinderClass {
 			CollectionService.RemoveTag(instance, UNLOCKABLE_TAG);
 
 			instance.Parent = this.instance.Components;
+			this.addComponents(instance);
 			this.onUnlockedComponent.Fire(instance.Name);
 
 			resolve();

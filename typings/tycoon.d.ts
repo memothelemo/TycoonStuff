@@ -16,3 +16,7 @@ interface TycoonAttributes {
 	 */
 	ComponentId: string;
 }
+
+interface BaseOrePart extends Part {
+	Worth: NumberValue;
+}
