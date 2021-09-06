@@ -1,3 +1,5 @@
+import { t } from "@rbxts/t";
+
 interface TycoonAttributes {
 	/**
 	 * This attribute is assigned when a tycoon is owned
@@ -17,8 +19,8 @@ interface TycoonAttributes {
 	ComponentId: string;
 }
 
-interface TycoonModel extends Model {
+type TycoonModel = t.static<{
 	Components: Folder;
 	Ores: Folder;
 	Spawn: SpawnLocation;
-}
+}>;

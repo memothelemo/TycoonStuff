@@ -1,11 +1,11 @@
 import Attributes from "@memolemo-studios/rbxts-attributes";
 import { BinderClass } from "@rbxts/binder";
-import { $terrify } from "rbxts-transformer-t";
+import { TycoonModel } from "shared/typeGuards";
 
-const checkTycoonModel = $terrify<TycoonModel>();
+import type { TycoonAttributes } from "../../../../typings/tycoon";
 
 function assertTycoonModel(object: Instance): asserts object is TycoonModel {
-	if (!checkTycoonModel(object)) {
+	if (!TycoonModel(object)) {
 		error(
 			`${object.GetFullName()} has 'Tycoon' tag but don't follow the required structure tree!`,
 		);
