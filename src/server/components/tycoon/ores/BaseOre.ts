@@ -1,6 +1,7 @@
 import { Janitor } from "@rbxts/janitor";
 import { CollectionService } from "@rbxts/services";
 
+import { ORE_TAG_NAME } from "../shared";
 import ServerTycoon from "../tycoon";
 
 declare global {
@@ -8,8 +9,6 @@ declare global {
 		BaseOre: typeof ServerBaseOre;
 	}
 }
-
-const ORE_TAG_NAME = "Ore";
 
 class ServerBaseOre<T extends BaseOrePart = BaseOrePart> {
 	private janitor = new Janitor();

@@ -38,6 +38,8 @@ export function requireOreTypeClass(typeName: string): ServerBaseOre {
 	return oreTypeClass as unknown as ServerBaseOre;
 }
 
+export const ORE_TAG_NAME = "Ore";
+
 export function throwErrorFromInstance(model: Instance, message: string): never {
 	throw `[${model.GetFullName()}]: ${message}`;
 }
