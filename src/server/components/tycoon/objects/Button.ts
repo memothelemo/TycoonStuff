@@ -14,6 +14,8 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 	private dependencyUnlockable!: Unlockable;
 	private unlockableTarget!: Unlockable;
 
+	private debounce = true;
+
 	instance: BasePart;
 
 	constructor(instance: Instance, public tycoon: ServerTycoon) {
@@ -34,6 +36,9 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 	}
 
 	private onButtonTouched(player: Player) {
+		if (!this.debounce) return;
+		this.debounce = false;
+
 		// reload unlockable target
 		if (!this.unlockableTarget) {
 			const target = this.attributes.get("Target");
@@ -45,7 +50,10 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 			this.tycoon
 				.unlock(this.unlockableTarget)
 				.then(() => this.destroy())
-				.catch(warn);
+				.catch(e => {
+					warn(e);
+					this.debounce = true;
+				});
 		}
 	}
 
@@ -122,7 +130,9 @@ class Button implements ServerBaseTycoonComponent<BasePart> {
 	}
 
 	destroy() {
-		this.janitor.Destroy();
+		if (this.janitor["Destroy"] !== undefined) {
+			this.janitor.Destroy();
+		}
 	}
 }
 

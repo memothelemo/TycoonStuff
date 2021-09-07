@@ -1,5 +1,4 @@
 import { Janitor } from "@rbxts/janitor";
-import Make from "@rbxts/make";
 import { CollectionService } from "@rbxts/services";
 
 import ServerTycoon from "../tycoon";
@@ -21,15 +20,13 @@ class ServerBaseOre<T extends BaseOrePart = BaseOrePart> {
 		const ownerOpt = tycoon.getOwner();
 		ownerOpt.Expect("No owner?!");
 
-		const instance = Make("Part", {
-			Children: [
-				Make("NumberValue", {
-					Name: "Worth",
-					Value: worth,
-				}),
-			],
-			CFrame: spawnCFrame,
-		}) as T;
+		// @rbxts/make took awhile to compile
+		const instance = new Instance("Part") as T;
+		instance.CFrame = spawnCFrame;
+
+		const worthPart = new Instance("NumberValue");
+		worthPart.Name = "Worth";
+		worthPart.Value = worth;
 
 		this.dressOre(instance);
 

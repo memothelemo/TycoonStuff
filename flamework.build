@@ -14,6 +14,7 @@
 		"tycoonstuff:out/server/components/tycoon/objects/Collector@Collector": "tycoonstuff:out/server/components/tycoon/objects/Collector@Collector",
 		"tycoonstuff:out/server/components/tycoon/objects/Cube@Cube": "tycoonstuff:out/server/components/tycoon/objects/Cube@Cube",
 		"tycoonstuff:out/server/components/tycoon/objects/Droppers/BaseDropper@BaseDropper": "tycoonstuff:out/server/components/tycoon/objects/Droppers/BaseDropper@BaseDropper",
-		"tycoonstuff:out/server/components/tycoon/ores/BaseOre@ServerBaseOre": "tycoonstuff:out/server/components/tycoon/ores/BaseOre@ServerBaseOre"
+		"tycoonstuff:out/server/components/tycoon/ores/BaseOre@ServerBaseOre": "tycoonstuff:out/server/components/tycoon/ores/BaseOre@ServerBaseOre",
+		"tycoonstuff:out/shared/classes/modelHighlighter@ModelHighlighter": "tycoonstuff:out/shared/classes/modelHighlighter@ModelHighlighter"
 	}
 }

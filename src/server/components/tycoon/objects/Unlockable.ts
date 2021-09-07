@@ -2,7 +2,7 @@ import Attributes from "@memolemo-studios/rbxts-attributes";
 import { Janitor } from "@rbxts/janitor";
 import { ServerBaseTycoonComponent } from "server/typings";
 
-import { throwInvalidStructureMsg } from "../shared";
+import { throwErrorFromInstance, throwInvalidStructureMsg } from "../shared";
 import ServerTycoon from "../tycoon";
 
 declare global {
@@ -18,6 +18,9 @@ interface UnlockableAttributes {
 function assertUnlockableModel(instance: Instance): asserts instance is Model {
 	if (!instance.IsA("Model")) {
 		throwInvalidStructureMsg(instance, "Unlockable");
+	}
+	if ((instance as Model).PrimaryPart === undefined) {
+		throwErrorFromInstance(instance, `'Unlockable' is used but the model doesn't have PrimaryPart property`);
 	}
 }
 

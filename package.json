@@ -34,7 +34,6 @@
     "@rbxts/binder": "^1.0.4",
     "@rbxts/delay-spawn-wait": "^2.0.0",
     "@rbxts/janitor": "^1.13.6-ts.0",
-    "@rbxts/make": "^1.0.5",
     "@rbxts/net": "^2.1.4",
     "@rbxts/option": "^1.0.1",
     "@rbxts/profileservice": "^1.4.0",

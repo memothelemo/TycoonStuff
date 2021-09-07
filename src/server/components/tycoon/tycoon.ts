@@ -9,6 +9,7 @@ import { TycoonService as TycoonServiceType } from "server/services/TycoonServic
 import { checkTycoonBaseComponentClass, ServerBaseTycoonComponent } from "server/typings";
 import { TycoonModel } from "shared/typeGuards";
 
+import { doObjectAnimation } from "./animator";
 import Unlockable from "./objects/Unlockable";
 import { throwErrorFromInstance, throwInvalidStructureMsg, UNLOCKABLE_TAG } from "./shared";
 
@@ -159,22 +160,25 @@ export default class ServerTycoon implements BinderClass {
 	}
 
 	unlock(unlockable: Unlockable): Promise<void> {
+		// spawn that guy
+		const instance = unlockable.instance;
 		return new Promise((resolve, reject) => {
 			const owner = this.getOwner();
 			if (owner.IsNone()) {
 				return reject(`Owner left the game!`);
 			}
 
-			// spawn that guy
-			const instance = unlockable.instance;
-			CollectionService.RemoveTag(instance, UNLOCKABLE_TAG);
-
-			instance.Parent = this.instance.Components;
-			this.addComponents(instance);
-			this.onUnlockedComponent.Fire(instance.Name);
-
-			resolve();
-		});
+			resolve(undefined);
+		})
+			.then(() => {
+				CollectionService.RemoveTag(instance, UNLOCKABLE_TAG);
+				instance.Parent = this.instance.Components;
+				return doObjectAnimation(instance);
+			})
+			.then(() => {
+				this.addComponents(instance);
+				this.onUnlockedComponent.Fire(instance.Name);
+			});
 	}
 
 	addComponents(instance: Instance) {
