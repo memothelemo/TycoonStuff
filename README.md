@@ -16,7 +16,7 @@ You can try this game in this link below here:
 https://www.roblox.com/games/7383477726/Somewhat-Tycoon
 
 Or consider watching my video below:
-https://www.youtube.com/DWX0m3FSs3w
+https://www.youtube.com/watch?v=WX0m3FSs3w
 
 ## Setup / Contribution
 
